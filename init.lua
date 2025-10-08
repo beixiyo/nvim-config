@@ -14,3 +14,6 @@ require("plugins/autopairs")
 require("plugins/bufferline")
 -- require("plugins/gitsigns") -- 已禁用 Git 功能
 require("plugins/telescope")
+
+-- 加载 Windows 风格的快捷键
+vim.cmd('source $VIMRUNTIME/mswin.vim')
