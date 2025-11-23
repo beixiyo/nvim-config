@@ -33,9 +33,7 @@ keymap.set("n", "<C-v>", '"+p') -- 从系统剪贴板粘贴
 keymap.set("v", "<C-v>", '"+p') -- 从系统剪贴板粘贴
 
 -- 撤回和回溯快捷键
-keymap.set("n", "<C-z>", "u") -- 撤回
-keymap.set("i", "<C-z>", "<ESC>u") -- 插入模式下撤回
-keymap.set("v", "<C-z>", "<ESC>u") -- 视觉模式下撤回
+keymap.set({ "n", "i" }, "<C-z>", "<Cmd>undo<CR>", { silent = true }) -- 撤回
 keymap.set("n", "<C-y>", "<C-r>") -- 回溯（重做）- 使用 Ctrl+Y
 keymap.set("i", "<C-y>", "<ESC><C-r>") -- 插入模式下回溯
 keymap.set("v", "<C-y>", "<ESC><C-r>") -- 视觉模式下回溯

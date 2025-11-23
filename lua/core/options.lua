@@ -10,6 +10,9 @@ opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
 
+-- 自动获取最新改动
+opt.autoread = true
+
 -- 防止包裹
 opt.wrap = false
 
