@@ -12,3 +12,21 @@
 
 -- 更多自动命令请参考 LazyVim 的默认配置：
 -- lua/lazyvim/config/autocmds.lua
+
+-- 解决 Window 粘贴到 Linux 换行符不同问题
+vim.opt.clipboard = "unnamedplus"
+
+if vim.fn.has('wsl') == 1 then
+  vim.g.clipboard = {
+    name = 'win32yank-wsl',
+    copy = {
+      ['+'] = 'win32yank.exe -i --crlf',
+      ['*'] = 'win32yank.exe -i --crlf',
+    },
+    paste = {
+      ['+'] = 'win32yank.exe -o --lf', -- 这里强制转换为 LF，解决 ^M 问题
+      ['*'] = 'win32yank.exe -o --lf',
+    },
+    cache_enabled = 0,
+  }
+end
