@@ -13,9 +13,10 @@
 -- 更多自动命令请参考 LazyVim 的默认配置：
 -- lua/lazyvim/config/autocmds.lua
 
--- 解决 Window 粘贴到 Linux 换行符不同问题
-vim.opt.clipboard = "unnamedplus"
+-- 禁止默认 clipboard 影响 d/x
+vim.opt.clipboard = ""
 
+-- WSL 特殊处理换行
 if vim.fn.has('wsl') == 1 then
   vim.g.clipboard = {
     name = 'win32yank-wsl',
@@ -24,9 +25,38 @@ if vim.fn.has('wsl') == 1 then
       ['*'] = 'win32yank.exe -i --crlf',
     },
     paste = {
-      ['+'] = 'win32yank.exe -o --lf', -- 这里强制转换为 LF，解决 ^M 问题
+      ['+'] = 'win32yank.exe -o --lf',
       ['*'] = 'win32yank.exe -o --lf',
     },
     cache_enabled = 0,
   }
+elseif vim.env.SSH_CONNECTION then
+  vim.g.clipboard = {
+    name = 'osc52',
+    copy = {
+      ['+'] = 'osc52-copy',
+      ['*'] = 'osc52-copy',
+    },
+    paste = {
+      ['+'] = 'osc52-paste',
+      ['*'] = 'osc52-paste',
+    },
+    cache_enabled = 0,
+  }
 end
+
+-- 只在 yank 时同步剪贴板
+vim.api.nvim_create_autocmd("TextYankPost", {
+  pattern = "*",
+  callback = function(event)
+    if event.operator == "y" then
+      local text = table.concat(vim.fn.getreg('"', 1, true), "\n")
+      -- 本地复制
+      if vim.fn.has('wsl') == 1 or not vim.env.SSH_CONNECTION then
+        vim.fn.setreg("+", text)
+        vim.fn.setreg("*", text)
+      end
+      -- 远程通过 vim.g.clipboard 自动发送 OSC52
+    end
+  end,
+})
