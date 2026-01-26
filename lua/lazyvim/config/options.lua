@@ -45,7 +45,7 @@ vim.g.ai_cmp = true
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
 -- 可选：配置 Neovim 使用的外部终端（例如 PowerShell），默认注释掉
-LazyVim.terminal.setup("pwsh")
+-- LazyVim.terminal.setup("pwsh")
 
 -- 当通过 LSP 检测工程根目录时，需要忽略的 LSP server 列表（例如 Copilot 不应改变根目录）
 vim.g.root_lsp_ignore = { "copilot" }
