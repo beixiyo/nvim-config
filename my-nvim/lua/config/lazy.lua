@@ -1,14 +1,15 @@
--- ============================================================================
--- my-nvim：lazy.nvim 引导与插件入口
--- ============================================================================
--- 本文件做两件事：① 确保 lazy.nvim 存在并加入 rtp，使 require("lazy") 可用；
--- ② 调用 lazy.setup，从 lua/plugins/ 加载插件列表并启动插件管理。
+-- ================================
+-- lazy.nvim 引导与插件入口
+-- ================================
+-- 本文件做两件事：
+-- 1. 确保 lazy.nvim 存在并加入 rtp，使 require("lazy") 可用
+-- 2. 调用 lazy.setup，从 lua/plugins/ 加载插件列表并启动插件管理
 
--- ----------------------------------------------------------------------------
--- ① 安装路径与自动克隆
--- ----------------------------------------------------------------------------
--- stdpath("data") 是 Neovim 的用户数据目录（受 NVIM_APPNAME 影响）。
--- lazy.nvim 放在其下 data/lazy/lazy.nvim，与其它插件数据分离。
+-- -----------------------
+-- 安装路径与自动克隆
+-- -----------------------
+-- stdpath("data") 是 Neovim 的用户数据目录（受 NVIM_APPNAME 影响）
+-- lazy.nvim 放在其下 data/lazy/lazy.nvim，与其它插件数据分离
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -22,15 +23,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     os.exit(1)
   end
 end
--- 把 lazy.nvim 所在目录插到 rtp 最前，这样 require("lazy") 会找到刚克隆/已有的 lazy 包。
+-- 把 lazy.nvim 所在目录插到 rtp 最前，这样 require("lazy") 会找到刚克隆/已有的 lazy 包
 vim.opt.rtp:prepend(lazypath)
 
--- ----------------------------------------------------------------------------
--- ② 插件列表与 lazy 配置
--- ----------------------------------------------------------------------------
--- spec：从 lua/plugins/init.lua（即 require("plugins") 的返回值）加载插件表。
--- defaults：新插件默认非懒加载、不固定版本。
--- install.colorscheme：首次安装后尝试设置的颜色方案；当前由 plugins.theme 设置 tokyonight。
+-- ------------------------
+-- 插件列表与 lazy 配置
+-- ------------------------
+-- spec：从 lua/plugins/init.lua（即 require("plugins") 的返回值）加载插件表
+-- defaults：新插件默认非懒加载、不固定版本
+-- install.colorscheme：首次安装后尝试设置的颜色方案；当前由 plugins.theme 设置 tokyonight
 require("lazy").setup({
   spec = { { import = "plugins" } },
   defaults = { lazy = false, version = false },

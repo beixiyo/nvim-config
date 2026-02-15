@@ -1,0 +1,103 @@
+local M = {}
+
+M.colors = {
+  -- 基础颜色
+  bg = "#191815",
+  bg_dark = "#181818",
+  bg_highlight = "#23262c",
+  bg_visual = "#2c313a",
+  bg_popup = "#404754",
+  bg_search = "#d19a6644",
+  fg = "#c2c2c2",
+  fg_dark = "#c2c2c2",
+  fg_gutter = "#495162",
+  fg_border = "#3e4452",
+
+  -- 语法高亮颜色
+  red = "#e05561",
+  dark_red = "#c24038",
+  bright_red = "#ff616e",
+  green = "#8cc265",
+  bright_green = "#a5e075",
+  yellow = "#d18f52",
+  dark_yellow = "#d19a66",
+  bright_yellow = "#f0a45d",
+  blue = "#4aa5f0",
+  bright_blue = "#4dc4ff",
+  purple = "#c162de",
+  bright_purple = "#de73ff",
+  cyan = "#42b3c2",
+  bright_cyan = "#4cd1e0",
+  white = "#c2c2c2",
+  bright_white = "#e6e6e6",
+  black = "#191815",
+  gray = "#3f4451",
+
+  -- 特殊颜色
+  comment = "#7f848e",
+  comment_doc = "#7f848e",
+  type = "#4ec9b0",
+  operator = "#c2c2c2",
+  property = "#e06c75",
+  variable = "#e06c75",
+  attribute = "#d19a66",
+  constructor = "#e06c75",
+  enum = "#56b6c2",
+  constant = "#d19a66",
+  boolean = "#d19a66",
+  number = "#d19a66",
+  string = "#98c379",
+  string_escape = "#56b6c2",
+  string_regex = "#e06c75",
+  string_special = "#e06c75",
+  emphasis = "#c678dd",
+  predictive = "#4d5970",
+  punctuation = "#c2c2c2",
+  tag = "#e06c75",
+  title = "#d07277",
+  link_text = "#4aa5f0",
+  link_uri = "#4aa5f0",
+  text_literal = "#98c379",
+  variable_special = "#e5c07b",
+
+  -- Git 颜色
+  git_add = "#a5e075",
+  git_change = "#e5c07b",
+  git_delete = "#ff616e",
+
+  -- 诊断颜色
+  error = "#c24038",
+  error_bg = "#181818",
+  error_border = "#a03237",
+  warning = "#d19a66",
+  warning_bg = "#181818",
+  warning_border = "#89734d",
+  hint = "#7a849c",
+  hint_bg = "#181818",
+  hint_border = "#013b64",
+  info = "#4aa5f0",
+  info_bg = "#181818",
+  info_border = "#013b64",
+}
+
+-- 终端颜色
+M.terminal_colors = {
+  red = M.colors.red,
+  green = M.colors.green,
+  yellow = M.colors.yellow,
+  blue = M.colors.blue,
+  purple = M.colors.purple,
+  cyan = M.colors.cyan,
+  white = M.colors.white,
+  black = M.colors.black,
+  bright_red = M.colors.bright_red,
+  bright_green = M.colors.bright_green,
+  bright_yellow = M.colors.bright_yellow,
+  bright_blue = M.colors.bright_blue,
+  bright_purple = M.colors.bright_purple,
+  bright_cyan = M.colors.bright_cyan,
+  bright_white = M.colors.bright_white,
+  bright_black = "#4f5666",
+}
+
+return M

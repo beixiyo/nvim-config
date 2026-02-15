@@ -6,24 +6,35 @@
 
 ## 一、目标陈述
 
-- **最终目标**：拥有一套**完全由自己从零实现**的 Neovim 配置，不依赖 LazyVim 等现成发行版；通过模仿与学习，理解并实现自己需要的功能。
+- **最终目标**：拥有一套**完全由自己从零实现**的 Neovim 配置，**不依赖 LazyVim 发行版**；通过模仿与学习，理解并实现自己需要的功能。
 - **配置身份**：使用 **`NVIM_APPNAME=nvim/my-nvim`**，与当前基于 LazyVim 的 `~/.config/nvim` 配置**隔离**，便于对比、迁移和逐步替换。
 - **启动方式**：通过 `NVIM_APPNAME=nvim/my-nvim nvim`（或别名/包装脚本）启动「自实现配置」；默认 `nvim` 仍可继续使用现有 LazyVim 配置。
 
 ---
 
-## 二、环境约定
+## 二、名词区分（避免混淆）
+
+| 名词 | 含义 | my-nvim 是否使用 |
+|------|------|------------------|
+| **lazy.nvim** | 插件**管理器**（Folke 的 `folke/lazy.nvim`），负责安装、加载、懒加载插件。 | ✅ **使用**。`lua/config/lazy.lua` 里克隆并 `require("lazy").setup(...)` 的就是它。 |
+| **LazyVim** | 基于 Neovim 的**发行版**（`LazyVim/lazyvim`），内置大量插件、`LazyVim.*` / Snacks 等框架，内部用 lazy.nvim 做插件管理。 | ❌ **不依赖**。my-nvim 中不 `require("lazyvim")`，不引用其 lua 源码或配置。 |
+
+因此：**「不依赖 LazyVim」= 不用 LazyVim 发行版；「用 lazy.nvim」= 只用其插件管理器，配置与目录完全自己写。** 二者不矛盾。
+
+---
+
+## 三、环境约定
 
 | 项目 | 说明 |
 |------|------|
 | 新配置目录 | `$XDG_CONFIG_HOME/nvim/my-nvim/`（即 `~/.config/nvim/my-nvim/`） |
 | 实现方式 | `NVIM_APPNAME=nvim/my-nvim`，仅影响 Neovim，不修改全局 XDG |
-| 参考对象 | 当前 `~/.config/nvim`（LazyVim 本地配置）可作为功能与结构参考，但新配置中**不直接依赖** LazyVim 源码 |
-| 插件管理 | 计划使用 lazy.nvim，但配置与目录结构由自己组织 |
+| 参考对象 | 当前 `~/.config/nvim`（LazyVim 本地配置）可作为功能与结构**参考**，但 my-nvim 中**不 require 任何 LazyVim 源码**。 |
+| 插件管理 | 使用 **lazy.nvim**（插件管理器）；插件列表、目录结构、键位/选项等全部在 my-nvim 内自己组织。 |
 
 ---
 
-## 三、分步改造计划（概要）
+## 四、分步改造计划（概要）
 
 按「先跑通、再补齐」的顺序推进，每一步都可单独验证。
 
@@ -47,14 +58,14 @@
 
 ---
 
-## 四、当前状态与下一步
+## 五、当前状态与下一步
 
 - **已完成**：骨架 + lazy 引导 + 基础 options/keymaps。目录下已有 `init.lua`、`lua/config/{lazy,options,keymaps}.lua`、`lua/plugins/init.lua`；启动后具备基础编辑选项与剪贴板等键位。
 - **待做**：按需在 `lua/plugins/` 添加插件 spec（主题、LSP、文件树等）。
 
 ---
 
-## 五、文档维护
+## 六、文档维护
 
 - 本文档（`target.md`）随改造推进可更新「当前状态与下一步」、细化各步骤的子任务或补充「已完成项」。
 - 与 my-nvim 相关的说明（如目录结构、加载顺序）可放在 `docs/` 下单独文件，并在本目标中做链接或引用。
