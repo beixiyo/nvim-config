@@ -10,8 +10,9 @@ return {
   { import = "plugins.ui.bufferline" },
   { import = "plugins.ui.lualine" },
   { import = "plugins.ui.noice" },
-  -- 代码：语法、补全、Markdown 渲染
+  -- 代码：语法、自动配对、补全、Markdown 渲染
   { import = "plugins.code.treesitter" },
+  { import = "plugins.code.mini-pairs" },
   { import = "plugins.code.blink" },
   { import = "plugins.code.render-markdown" },
   -- 文件：文件树、模糊查找

@@ -5,6 +5,9 @@
 
 local map = vim.keymap.set
 
+-- 插入模式：jk 退出到普通模式（替代 Esc）
+map("i", "jk", "<Esc>", { desc = "退出插入模式", silent = true })
+
 -- 窗口焦点：Ctrl-hjkl 切换上下左右
 map("n", "<C-h>", "<C-w>h", { desc = "焦点左窗口", silent = true })
 map("n", "<C-j>", "<C-w>j", { desc = "焦点下窗口", silent = true })
