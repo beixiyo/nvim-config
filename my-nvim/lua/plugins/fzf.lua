@@ -4,7 +4,11 @@
 
 return {
   "ibhagwan/fzf-lua",
-  cmd = "FzfLua",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+
+  ---@module "fzf-lua"
+  ---@type fzf-lua.Config|{}
+  ---@diagnostic disable: missing-fields
   opts = {
     files = {
       cwd_prompt = false,  -- 输入行不显示当前工作目录
@@ -16,6 +20,7 @@ return {
       path_shorten = 4,
     },
   },
+
   config = function(_, opts)
     require("fzf-lua").setup(opts)
   end,

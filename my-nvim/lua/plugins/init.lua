@@ -8,6 +8,7 @@ return {
   { import = "plugins.which-key" },
   { import = "plugins.fzf" },
   { import = "plugins.alpha" },
+  { import = "plugins.neo-tree" },
   { import = "plugins.noice" },
   { import = "plugins.blink" },
 }

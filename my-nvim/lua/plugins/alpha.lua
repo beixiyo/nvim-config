@@ -5,6 +5,15 @@
 -- 作用：启动时显示欢迎页与快捷按钮，按钮用内置命令或简单 Lua
 -- 主题：dashboard（alpha.themes.dashboard），含 section.header / buttons / footer 与 layout
 
+--- 无文件启动时的项目根（与 neo-tree 一致）：Git 根或 cwd
+local function start_dir()
+  local ok, out = pcall(vim.fn.system, "git rev-parse --show-toplevel 2>/dev/null")
+  if ok and out and #out > 0 then
+    return vim.trim(out)
+  end
+  return vim.fn.getcwd()
+end
+
 return {
   {
     "goolord/alpha-nvim",
@@ -94,6 +103,25 @@ return {
       end
 
       require("alpha").setup(dashboard.opts)
+
+      -- ----------------------------------
+      -- 无文件启动时：左侧 neo-tree，右侧 Alpha（当前窗口已是 Alpha，左侧打开文件树即可）
+      -- ----------------------------------
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "AlphaReady",
+        once = true,
+        callback = function()
+          if vim.fn.argc() == 0 then
+            vim.defer_fn(function()
+              pcall(require("neo-tree.command").execute, {
+                toggle = true,
+                dir = start_dir(),
+                position = "left",
+              })
+            end, 10)
+          end
+        end,
+      })
 
       -- ----------------------------------
       -- 插件加载完成后：页脚显示插件数量与启动耗时，并刷新 Alpha
