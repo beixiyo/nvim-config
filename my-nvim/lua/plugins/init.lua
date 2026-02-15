@@ -13,4 +13,5 @@ return {
   { import = "plugins.lualine" },
   { import = "plugins.noice" },
   { import = "plugins.blink" },
+  { import = "plugins.render-markdown" },
 }
