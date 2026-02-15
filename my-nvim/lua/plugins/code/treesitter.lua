@@ -2,20 +2,30 @@
 -- 文档：https://github.com/nvim-treesitter/nvim-treesitter
 return {
   "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
-  opts = {
-    highlight = { enable = true },
-    indent = { enable = true },
-    -- 基于语法的代码折叠（zo/zc 等）
-    folds = { enable = true },
-    ensure_installed = {
-      "javascript",
-      "tsx",
-      "typescript",
-    },
-  },
-  config = function(_, opts)
-    require("nvim-treesitter").setup(opts)
-  end,
   lazy = false,
+  branch = "main",
+  version = false,
+  build = ":TSUpdate",
+  config = function()
+    local parser_list = {
+      "javascript",
+      "typescript",
+      "jsdoc",
+      "tsx",
+    }
+
+    -- 安装解析器（异步，不阻塞）
+    local ts = require("nvim-treesitter")
+    if ts.install then
+      ts.install(parser_list)
+    end
+
+    -- 启用 treesitter 高亮
+    vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("treesitter_highlight", { clear = true }),
+      callback = function()
+        pcall(vim.treesitter.start)
+      end,
+    })
+  end,
 }
