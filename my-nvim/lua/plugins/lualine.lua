@@ -23,8 +23,9 @@ return {
         theme = "auto",
         globalstatus = true, -- 状态栏始终整行显示在最底部左侧
         disabled_filetypes = { statusline = { "dashboard", "alpha" } },
-        component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
+        -- 圆角分隔符（需 Nerd Font / Powerline 字体）
+        component_separators = { left = "\u{e0b5}", right = "\u{e0b7}" },
+        section_separators = { left = "\u{e0b4}", right = "\u{e0b6}" },
       },
       sections = {
         lualine_a = { "mode" },
