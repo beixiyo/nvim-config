@@ -18,7 +18,8 @@ return {
   -- 文件：文件树、模糊查找
   { import = "plugins.file.neo-tree" },
   { import = "plugins.file.fzf" },
-  -- 工具：键位提示、终端
+  -- 工具：键位提示、Flash 跳转、终端
   { import = "plugins.tools.which-key" },
+  { import = "plugins.tools.flash" },
   { import = "plugins.tools.toggleterm" },
 }
