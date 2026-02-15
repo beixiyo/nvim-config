@@ -9,6 +9,7 @@ return {
   { import = "plugins.fzf" },
   { import = "plugins.alpha" },
   { import = "plugins.neo-tree" },
+  { import = "plugins.bufferline" },
   { import = "plugins.noice" },
   { import = "plugins.blink" },
 }
