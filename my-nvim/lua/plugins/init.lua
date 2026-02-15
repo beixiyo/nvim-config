@@ -6,8 +6,8 @@
 return {
   { import = "plugins.theme" },
   { import = "plugins.which-key" },
-  { import = "plugins.telescope" },
   { import = "plugins.fzf" },
   { import = "plugins.alpha" },
   { import = "plugins.noice" },
+  { import = "plugins.blink" },
 }
