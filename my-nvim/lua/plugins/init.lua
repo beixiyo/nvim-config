@@ -10,6 +10,7 @@ return {
   { import = "plugins.alpha" },
   { import = "plugins.neo-tree" },
   { import = "plugins.bufferline" },
+  { import = "plugins.lualine" },
   { import = "plugins.noice" },
   { import = "plugins.blink" },
 }
