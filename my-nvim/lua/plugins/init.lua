@@ -14,4 +14,6 @@ return {
   { import = "plugins.noice" },
   { import = "plugins.blink" },
   { import = "plugins.render-markdown" },
+  { import = "plugins.toggleterm" },
+  { import = "plugins.treesitter" },
 }

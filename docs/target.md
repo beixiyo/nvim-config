@@ -60,7 +60,7 @@
 
 ## 五、当前状态与下一步
 
-- **已完成**：骨架 + lazy 引导 + 基础 options/keymaps。目录下已有 `init.lua`、`lua/config/{lazy,options,keymaps}.lua`、`lua/plugins/init.lua`；启动后具备基础编辑选项与剪贴板等键位。**窗口焦点**：`Ctrl-h`/`Ctrl-j`/`Ctrl-k`/`Ctrl-l` 在分屏间切换焦点（左/下/上/右），普通模式与终端模式均生效（`lua/config/keymaps.lua`）。已实现**文件树**：`lua/plugins/neo-tree.lua`（neo-tree.nvim），键位 `<leader>fe` / `<leader>e` 项目根、`<leader>fE`/`<leader>E` 当前目录、`<leader>ge` Git 状态、`<leader>be` 缓冲区树。已实现 **Markdown 渲染**：`lua/plugins/render-markdown.lua`（render-markdown.nvim），在 Markdown 缓冲区中美化显示标题、代码块、列表、引用、表格等；键位 `<leader>mr` 开/关渲染、`<leader>mp` 侧边预览。
+- **已完成**：骨架 + lazy 引导 + 基础 options/keymaps。目录下已有 `init.lua`、`lua/config/{lazy,options,keymaps}.lua`、`lua/plugins/init.lua`；启动后具备基础编辑选项与剪贴板等键位。**窗口焦点**：`Ctrl-h`/`Ctrl-j`/`Ctrl-k`/`Ctrl-l` 在分屏间切换焦点（左/下/上/右），普通模式与终端模式均生效（`lua/config/keymaps.lua`）。已实现**文件树**：`lua/plugins/neo-tree.lua`（neo-tree.nvim），键位 `<leader>fe` / `<leader>e` 项目根、`<leader>fE`/`<leader>E` 当前目录、`<leader>ge` Git 状态、`<leader>be` 缓冲区树。已实现 **Markdown 渲染**：`lua/plugins/render-markdown.lua`（render-markdown.nvim），在 Markdown 缓冲区中美化显示标题、代码块、列表、引用、表格等；键位 `<leader>mr` 开/关渲染、`<leader>mp` 侧边预览。已实现**终端切换**：`lua/plugins/toggleterm.lua`（toggleterm.nvim），键位「Ctrl+`」打开/关闭终端（水平分屏，可多终端；在插入模式与终端内同样生效）。
 - **待做**：按需在 `lua/plugins/` 添加其它插件 spec（主题已有，LSP 等）。
 
 ---
