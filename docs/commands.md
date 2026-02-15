@@ -93,9 +93,8 @@
 | 命令 | 功能 | 说明 |
 |------|------|------|
 | `:Telescope find_files` | 查找文件 | 打开文件搜索界面 |
-| `:Telescope keymaps` | 搜索快捷键 | 搜索所有快捷键定义 |
 
-**注意：** 这些命令需要启用 Telescope extra（`:LazyExtras` 中启用 `editor.telescope`）
+**注意：** 以上命令需启用 Telescope extra（`:LazyExtras` → `editor.telescope`）。快捷键搜索见上方「⌨️ 快捷键相关命令」
 
 ---
 
@@ -135,7 +134,9 @@ end
 
 ## 📚 相关文档
 
+- [README.md](README.md) - 文档索引与检查说明
 - [getting-start.md](getting-start.md) - 初学者指南
 - [keymap-guide.md](keymap-guide.md) - 快捷键配置指南
 - [lua-config.md](lua-config.md) - Lua 配置说明
 - [custom-plugin-guide.md](custom-plugin-guide.md) - 插件配置指南
+- [dependencies.md](dependencies.md) - 外部工具依赖（fd / rg / fzf）

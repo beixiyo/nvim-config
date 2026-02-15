@@ -24,7 +24,7 @@ Leader 键是快捷键的前缀键，默认是**空格键**
 - `<leader>w` = 按空格键，然后按 `w`
 
 **相关文件：**
-- [options.lua](../lua/lazyvim/config/options.lua#L9) (第 9 行) - 定义 Leader 键
+- [options.lua](../lua/lazyvim/config/options.lua#L4) (第 4 行) - 定义 Leader 键
 
 ---
 

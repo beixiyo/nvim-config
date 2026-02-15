@@ -101,7 +101,7 @@ lua/
 
 ### 4.2 init.lua 中的路径设置 ✅
 
-`/init.lua` 第 29 行：
+`init.lua` 第 19 行：
 ```lua
 vim.opt.rtp:prepend(vim.fn.stdpath("config"))
 ```
