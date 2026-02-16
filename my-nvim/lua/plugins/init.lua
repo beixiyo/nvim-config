@@ -1,28 +1,29 @@
--- ================================
 -- 插件列表入口
 -- ================================
--- 按分类引入；Snacks 需优先加载（bufferline / dashboard 依赖）
+-- 按文件名排序引入；Snacks 的实际加载顺序由 lazy.nvim 配置控制
 
 return {
-  -- Snacks 提供的功能（plugins.snacks 中启用）：
-  --   dashboard 欢迎页（无文件启动时）、picker 找文件/搜内容(<leader>ff/fg/fr/fc/fb/sg/sw)、explorer 文件树(<leader>e/E/fe/fE)、
-  --   terminal 终端(Ctrl+\ / <leader>ft)、notifier 通知(替代 vim.notify)、bufdelete 关 buffer(bufferline 用)、bigfile/input/quickfile
+  -- Snacks 功能总览（详见 `plugins.snacks`）：
+  -- - `dashboard`：欢迎页（无文件启动时）
+  -- - `picker`：文件/内容检索（`<leader>ff` / `fg` / `fr` / `fc` / `fb` / `sg` / `sw`）
+  -- - `explorer`：文件树（`<leader>e` / `E` / `fe` / `fE`）
+  -- - `terminal`：终端（`<C-\>` / `<leader>ft`）
+  -- - `notifier`：通知中心（替代 `vim.notify`）
+  -- - `bufdelete`：关闭 buffer（供 bufferline 使用）
+  -- - `bigfile` / `input` / `quickfile`
   { import = "plugins.snacks" },
 
-  -- UI：主题、状态栏、buffer 标签、消息（欢迎页已由 Snacks.dashboard 提供）
-  { import = "plugins.ui.theme" },
+  { import = "plugins.code.blink" },
+  { import = "plugins.code.mini-pairs" },
+  { import = "plugins.code.render-markdown" },
+  { import = "plugins.code.treesitter" },
+
+  { import = "plugins.tools.flash" },
+  { import = "plugins.tools.which-key" },
+
   { import = "plugins.ui.bufferline" },
   { import = "plugins.ui.indent" },
   { import = "plugins.ui.lualine" },
   { import = "plugins.ui.noice" },
-
-  -- 代码：语法、自动配对、补全、Markdown 渲染
-  { import = "plugins.code.treesitter" },
-  { import = "plugins.code.mini-pairs" },
-  { import = "plugins.code.blink" },
-  { import = "plugins.code.render-markdown" },
-
-  -- 工具：键位提示、Flash 跳转
-  { import = "plugins.tools.which-key" },
-  { import = "plugins.tools.flash" },
+  { import = "plugins.ui.theme" },
 }
