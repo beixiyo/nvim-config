@@ -8,16 +8,20 @@ return {
   --   dashboard 欢迎页（无文件启动时）、picker 找文件/搜内容(<leader>ff/fg/fr/fc/fb/sg/sw)、explorer 文件树(<leader>e/E/fe/fE)、
   --   terminal 终端(Ctrl+\ / <leader>ft)、notifier 通知(替代 vim.notify)、bufdelete 关 buffer(bufferline 用)、bigfile/input/quickfile
   { import = "plugins.snacks" },
+
   -- UI：主题、状态栏、buffer 标签、消息（欢迎页已由 Snacks.dashboard 提供）
   { import = "plugins.ui.theme" },
   { import = "plugins.ui.bufferline" },
+  { import = "plugins.ui.indent" },
   { import = "plugins.ui.lualine" },
   { import = "plugins.ui.noice" },
+
   -- 代码：语法、自动配对、补全、Markdown 渲染
   { import = "plugins.code.treesitter" },
   { import = "plugins.code.mini-pairs" },
   { import = "plugins.code.blink" },
   { import = "plugins.code.render-markdown" },
+
   -- 工具：键位提示、Flash 跳转
   { import = "plugins.tools.which-key" },
   { import = "plugins.tools.flash" },
