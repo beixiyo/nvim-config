@@ -1,12 +1,12 @@
 -- ================================
 -- 插件列表入口
 -- ================================
--- 按分类引入：ui / code / file / tools
+-- 按分类引入；Snacks 需优先加载（bufferline / dashboard 依赖）
 
 return {
-  -- UI：主题、欢迎页、状态栏、buffer 标签、消息
+  { import = "plugins.snacks" },
+  -- UI：主题、状态栏、buffer 标签、消息（欢迎页已由 Snacks.dashboard 提供）
   { import = "plugins.ui.theme" },
-  { import = "plugins.ui.alpha" },
   { import = "plugins.ui.bufferline" },
   { import = "plugins.ui.lualine" },
   { import = "plugins.ui.noice" },
@@ -15,11 +15,9 @@ return {
   { import = "plugins.code.mini-pairs" },
   { import = "plugins.code.blink" },
   { import = "plugins.code.render-markdown" },
-  -- 文件：文件树、模糊查找
+  -- 文件：文件树（模糊查找已由 Snacks.picker 提供）
   { import = "plugins.file.neo-tree" },
-  { import = "plugins.file.fzf" },
-  -- 工具：键位提示、Flash 跳转、终端
+  -- 工具：键位提示、Flash 跳转（终端已由 Snacks.terminal 提供）
   { import = "plugins.tools.which-key" },
   { import = "plugins.tools.flash" },
-  { import = "plugins.tools.toggleterm" },
 }

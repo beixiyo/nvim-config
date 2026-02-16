@@ -7,7 +7,7 @@ return {
   "akinsho/bufferline.nvim",
   version = "*",
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  event = "BufReadPre",
+  event = "VeryLazy",
   opts = {
     options = { -- bufferline 的核心配置
       -- stylua: ignore

@@ -58,14 +58,30 @@
 
 ---
 
-## 五、当前状态与下一步
+## 五、Snacks 替换一览（my-nvim）
 
-- **已完成**：骨架 + lazy 引导 + 基础 options/keymaps。目录下已有 `init.lua`、`lua/config/{lazy,options,keymaps}.lua`、`lua/plugins/init.lua`；启动后具备基础编辑选项与剪贴板等键位。**窗口焦点**：`Ctrl-h`/`Ctrl-j`/`Ctrl-k`/`Ctrl-l` 在分屏间切换焦点（左/下/上/右），普通模式与终端模式均生效（`lua/config/keymaps.lua`）。已实现**文件树**：`lua/plugins/neo-tree.lua`（neo-tree.nvim），键位 `<leader>fe` / `<leader>e` 项目根、`<leader>fE`/`<leader>E` 当前目录、`<leader>ge` Git 状态、`<leader>be` 缓冲区树。已实现 **Markdown 渲染**：`lua/plugins/render-markdown.lua`（render-markdown.nvim），在 Markdown 缓冲区中美化显示标题、代码块、列表、引用、表格等；键位 `<leader>mr` 开/关渲染、`<leader>mp` 侧边预览。已实现**终端切换**：`lua/plugins/toggleterm.lua`（toggleterm.nvim），键位「Ctrl+`」打开/关闭终端（水平分屏，可多终端；在插入模式与终端内同样生效）。
+为减少独立插件、统一用 **folke/snacks.nvim** 提供的能力，以下功能已用 Snacks 替换，并已按文档验证。
+
+| 原插件 / 能力 | Snacks 替代 | 说明 |
+|---------------|-------------|------|
+| **goolord/alpha-nvim** | `Snacks.dashboard` | 启动欢迎页与快捷按钮在 `plugins/snacks.lua` 的 dashboard 预设中配置；无文件启动时自动显示。 |
+| **ibhagwan/fzf-lua** | `Snacks.picker` | 找文件 / 搜内容用 fd、rg（内置优先 fd→rg→find；grep 固定 rg）。键位：`<leader>ff` 找文件、`<leader>sg` grep、`<leader>fr` 最近、`<leader>fb` 缓冲区等，见 `plugins/snacks.lua` keys。 |
+| **akinsho/toggleterm.nvim** | `Snacks.terminal` | 键位 `Ctrl+\` 或 `<leader>ft` 打开/切换浮动或分屏终端。 |
+| （buffer 关闭逻辑） | `Snacks.bufdelete` | bufferline.nvim 的关闭/右键关闭已依赖 `Snacks.bufdelete`，不破坏布局。 |
+| （通知样式） | `Snacks.notifier` | 启用后替代 `vim.notify`，与 Noice 等共用。 |
+
+**未替换**（继续使用原插件）：neo-tree（文件树）、noice（cmdline/消息 UI）、which-key、flash、blink.cmp、render-markdown、treesitter、theme、lualine、bufferline（仅用 Snacks.bufdelete）。
+
+---
+
+## 六、当前状态与下一步
+
+- **已完成**：骨架 + lazy 引导 + 基础 options/keymaps。**窗口焦点**：`Ctrl-h`/`Ctrl-j`/`Ctrl-k`/`Ctrl-l` 在分屏与终端间切换（`lua/config/keymaps.lua`）。**文件树**：neo-tree.nvim，`<leader>e` / `<leader>ge` / `<leader>be`。**Markdown 渲染**：render-markdown.nvim，`<leader>mr` / `<leader>mp`。**欢迎页 / 找文件 / 搜内容 / 终端**：已统一为 Snacks（dashboard、picker、terminal），见上一节；原 alpha-nvim、fzf-lua、toggleterm 已移除。**Buffer 标签**：bufferline.nvim，关闭用 `Snacks.bufdelete`。
 - **待做**：按需在 `lua/plugins/` 添加其它插件 spec（主题已有，LSP 等）。
 
 ---
 
-## 六、文档维护
+## 七、文档维护
 
 - 本文档（`target.md`）随改造推进可更新「当前状态与下一步」、细化各步骤的子任务或补充「已完成项」。
 - 与 my-nvim 相关的说明（如目录结构、加载顺序）可放在 `docs/` 下单独文件，并在本目标中做链接或引用。
