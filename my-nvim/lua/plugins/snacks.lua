@@ -4,15 +4,6 @@
 -- 需尽早加载：bufferline 依赖 Snacks.bufdelete，dashboard 需在 VimEnter 前就绪。
 -- 文档：https://github.com/folke/snacks.nvim
 
---- 项目根目录：优先 Git 根，否则当前工作目录（供 Explorer 用）
-local function root()
-  local ok, out = pcall(vim.fn.system, "git rev-parse --show-toplevel 2>/dev/null")
-  if ok and out and #out > 0 then
-    return vim.trim(out)
-  end
-  return vim.fn.getcwd()
-end
-
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -32,8 +23,8 @@ return {
     scroll = { enabled = true }, -- 平滑滚动：提供平滑的滚动体验
     statuscolumn = { enabled = true }, -- 状态列：侧边栏显示行号、诊断等
     words = { enabled = true }, -- 单词高亮：高亮当前单词的所有出现位置
-    -- 终端：用 Snacks.terminal 替代 toggleterm
     terminal = { enabled = true }, -- 终端：集成终端功能，支持浮动和标签页模式
+
     -- dashboard 预设：使用 Snacks.picker（files / live_grep / oldfiles）
     dashboard = {
       enabled = true,
@@ -73,10 +64,7 @@ return {
 
   keys = {
     -- 文件树（Snacks Explorer，替代 neo-tree）
-    { "<leader>e", function() Snacks.explorer({ cwd = root() }) end, desc = "文件树 (项目根)" },
-    { "<leader>E", function() Snacks.explorer() end, desc = "文件树 (cwd)" },
-    { "<leader>fe", function() Snacks.explorer({ cwd = root() }) end, desc = "Explorer (root)" },
-    { "<leader>fE", function() Snacks.explorer() end, desc = "Explorer (cwd)" },
+    { "<leader>e", function() Snacks.explorer() end, desc = "文件树" },
     -- 模糊查找（替代 fzf-lua）
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find File" },
     { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Git Files" },
