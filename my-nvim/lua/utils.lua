@@ -5,6 +5,16 @@ M.icons = {
     dots = "󰇘",
     clock = " ",
   },
+  dashboard = {
+    find_file = " ",
+    new_file = " ",
+    find_text = " ",
+    recent_files = " ",
+    config = " ",
+    session = " ",
+    lazy = "󰒲 ",
+    quit = " ",
+  },
   ft = {
     octo = " ",
     gh = " ",

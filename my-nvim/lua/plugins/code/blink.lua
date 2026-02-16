@@ -4,6 +4,8 @@
 -- 插入模式：LSP、路径、snippets、缓冲区；命令行 : / ? 补全（与 Noice 浮层配合）
 -- LSP 配置中请使用：capabilities = require("blink.cmp").get_lsp_capabilities()
 
+local utils = require("utils")
+
 return {
   'saghen/blink.cmp',
   dependencies = { 'rafamadriz/friendly-snippets' },
@@ -28,7 +30,8 @@ return {
 
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-      nerd_font_variant = 'mono'
+      nerd_font_variant = 'mono',
+      kind_icons = utils.icons.kinds,
     },
 
     -- (Default) Only show the documentation popup when manually triggered
