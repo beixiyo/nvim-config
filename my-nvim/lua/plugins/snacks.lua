@@ -21,19 +21,19 @@ return {
   ---@type snacks.Config
   opts = {
     -- 以下需显式启用（会注册 autocmd 等）
-    bigfile = { enabled = true },
-    explorer = { enabled = true },
-    indent = { enabled = false }, -- 可选，按需改为 true
-    input = { enabled = true },
-    notifier = { enabled = true },
-    picker = { enabled = true },
-    quickfile = { enabled = true },
-    scope = { enabled = false },
-    scroll = { enabled = false },
-    statuscolumn = { enabled = false },
-    words = { enabled = false },
+    bigfile = { enabled = true }, -- 大文件检测：自动为大文件禁用某些功能以提升性能
+    explorer = { enabled = true }, -- 文件浏览器：提供类似 neo-tree 的文件树功能
+    indent = { enabled = false }, -- 缩进线：显示缩进指示线（已禁用，使用其他插件）
+    input = { enabled = true }, -- 输入框：提供现代化的输入对话框
+    notifier = { enabled = true }, -- 通知系统：统一的消息通知显示
+    picker = { enabled = true }, -- 选择器：模糊查找文件、文本等（替代 fzf-lua）
+    quickfile = { enabled = true }, -- 快速文件：快速打开最近使用的文件
+    scope = { enabled = true }, -- 作用域检测：检测代码作用域，支持跳转等功能
+    scroll = { enabled = true }, -- 平滑滚动：提供平滑的滚动体验
+    statuscolumn = { enabled = true }, -- 状态列：侧边栏显示行号、诊断等
+    words = { enabled = true }, -- 单词高亮：高亮当前单词的所有出现位置
     -- 终端：用 Snacks.terminal 替代 toggleterm
-    terminal = { enabled = true },
+    terminal = { enabled = true }, -- 终端：集成终端功能，支持浮动和标签页模式
     -- dashboard 预设：使用 Snacks.picker（files / live_grep / oldfiles）
     dashboard = {
       enabled = true,
@@ -42,15 +42,19 @@ return {
           local source = (cmd == "live_grep" and "grep") or (cmd == "oldfiles" and "recent") or (cmd or "files")
           Snacks.picker.pick(source, opts or {})
         end,
+
+        ---@type snacks.dashboard.Item[]
         keys = {
-          { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-          { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-          { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-          { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })" },
-          { icon = " ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
-          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+          { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+          { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+          { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
         },
+
         header = [[
 ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
 ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
@@ -84,9 +88,24 @@ return {
     -- 终端（替代 toggleterm）：Ctrl+\ 或 <leader>ft
     { "<C-\\>", function() Snacks.terminal() end, desc = "Toggle Terminal", mode = { "n", "t" } },
     { "<leader>ft", function() Snacks.terminal() end, desc = "Toggle Terminal" },
+    -- 作用域检测
+    { "<leader>sj", function() Snacks.scope.jump() end, desc = "跳转到作用域" },
+    -- Git 相关 Picker
+    { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
+    { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+    { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff" },
+    { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+    { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
+    -- Neovim 内部 Picker（注意：避免与文件查找键位冲突）
+    { "<leader>fC", function() Snacks.picker.commands() end, desc = "Commands" },
+    { "<leader>fh", function() Snacks.picker.command_history() end, desc = "Command History" },
+    { "<leader>fR", function() Snacks.picker.registers() end, desc = "Registers" },
+    { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
+    { "<leader>fj", function() Snacks.picker.jumps() end, desc = "Jumps" },
+    { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+    { "<leader>fT", function() Snacks.picker.todo_comments() end, desc = "Todo Comments" },
+    -- Quickfix/Location
+    { "<leader>xq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
+    { "<leader>xl", function() Snacks.picker.loclist() end, desc = "Location List" },
   },
-
-  config = function(_, opts)
-    require("snacks").setup(opts)
-  end,
 }

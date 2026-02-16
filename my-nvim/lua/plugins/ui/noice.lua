@@ -25,8 +25,8 @@ return {
           filter = {
             event = "msg_show",
             any = {
-              { find = "%d+L, %d+B" },   -- 如 "10L, 20B" 行/字节统计
-              { find = "; after #%d+" }, -- 如 "; after #1" 跳转提示
+              { find = "%d+L, %d+B" },    -- 如 "10L, 20B" 行/字节统计
+              { find = "; after #%d+" },  -- 如 "; after #1" 跳转提示
               { find = "; before #%d+" }, -- 如 "; before #1" 跳转提示
             },
           },

@@ -26,11 +26,12 @@ return {
         local client = vim.lsp.get_client_by_id(event.data.client_id)
 
         -- 跳转相关（g 前缀，属于 "goto" 组）
-        map("n", "gd", vim.lsp.buf.definition, { desc = "跳转到定义", buffer = event.buf })
-        map("n", "gD", vim.lsp.buf.declaration, { desc = "跳转到声明", buffer = event.buf })
+        -- 使用 Snacks.picker 提供更好的多结果选择体验
+        map("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "跳转到定义", buffer = event.buf })
+        map("n", "gD", function() Snacks.picker.lsp_declarations() end, { desc = "跳转到声明", buffer = event.buf })
         map("n", "gr", function() Snacks.picker.lsp_references() end, { desc = "查找引用", buffer = event.buf, nowait = true })
-        map("n", "gI", vim.lsp.buf.implementation, { desc = "跳转到实现", buffer = event.buf })
-        map("n", "gy", vim.lsp.buf.type_definition, { desc = "跳转到类型定义", buffer = event.buf })
+        map("n", "gI", function() Snacks.picker.lsp_implementations() end, { desc = "跳转到实现", buffer = event.buf })
+        map("n", "gy", function() Snacks.picker.lsp_type_definitions() end, { desc = "跳转到类型定义", buffer = event.buf })
 
         -- 悬停和签名帮助
         map("n", "K", vim.lsp.buf.hover, { desc = "显示悬停信息", buffer = event.buf })
@@ -58,7 +59,15 @@ return {
         map("n", "[d", vim.diagnostic.goto_prev, { desc = "上一个诊断", buffer = event.buf })
         map("n", "]d", vim.diagnostic.goto_next, { desc = "下一个诊断", buffer = event.buf })
         map("n", "<leader>xd", vim.diagnostic.open_float, { desc = "显示诊断信息", buffer = event.buf })
+        map("n", "<leader>xx", function() Snacks.picker.diagnostics() end, { desc = "所有诊断", buffer = event.buf })
+        map("n", "<leader>xX", function() Snacks.picker.diagnostics_buffer() end, { desc = "当前缓冲区诊断", buffer = event.buf })
         map("n", "<leader>xl", vim.diagnostic.setloclist, { desc = "诊断列表", buffer = event.buf })
+        -- LSP 符号搜索
+        map("n", "<leader>ls", function() Snacks.picker.lsp_symbols() end, { desc = "文档符号", buffer = event.buf })
+        map("n", "<leader>lS", function() Snacks.picker.lsp_workspace_symbols() end, { desc = "工作区符号", buffer = event.buf })
+        -- LSP 调用关系
+        map("n", "<leader>lci", function() Snacks.picker.lsp_incoming_calls() end, { desc = "传入调用", buffer = event.buf })
+        map("n", "<leader>lco", function() Snacks.picker.lsp_outgoing_calls() end, { desc = "传出调用", buffer = event.buf })
       end,
     })
   end,
