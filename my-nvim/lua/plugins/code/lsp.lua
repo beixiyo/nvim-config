@@ -28,7 +28,7 @@ return {
         -- 跳转相关（g 前缀，属于 "goto" 组）
         map("n", "gd", vim.lsp.buf.definition, { desc = "跳转到定义", buffer = event.buf })
         map("n", "gD", vim.lsp.buf.declaration, { desc = "跳转到声明", buffer = event.buf })
-        map("n", "gr", vim.lsp.buf.references, { desc = "查找引用", buffer = event.buf })
+        map("n", "gr", function() Snacks.picker.lsp_references() end, { desc = "查找引用", buffer = event.buf, nowait = true })
         map("n", "gI", vim.lsp.buf.implementation, { desc = "跳转到实现", buffer = event.buf })
         map("n", "gy", vim.lsp.buf.type_definition, { desc = "跳转到类型定义", buffer = event.buf })
 
