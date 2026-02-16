@@ -74,10 +74,15 @@
 
 ---
 
-## 六、当前状态与下一步
+## 六、当前状态与下一步（含 LSP 规划）
 
 - **已完成**：骨架 + lazy 引导 + 基础 options/keymaps。**窗口焦点**：`Ctrl-h`/`Ctrl-j`/`Ctrl-k`/`Ctrl-l` 在分屏与终端间切换（`lua/config/keymaps.lua`）。**文件树**：neo-tree.nvim，`<leader>e` / `<leader>ge` / `<leader>be`。**Markdown 渲染**：render-markdown.nvim，`<leader>mr` / `<leader>mp`。**欢迎页 / 找文件 / 搜内容 / 终端**：已统一为 Snacks（dashboard、picker、terminal），见上一节；原 alpha-nvim、fzf-lua、toggleterm 已移除。**Buffer 标签**：bufferline.nvim，关闭用 `Snacks.bufdelete`。
-- **待做**：按需在 `lua/plugins/` 添加其它插件 spec（主题已有，LSP 等）。
+- **待做（LSP 相关）**：
+  - 在 `lua/plugins/lsp/` 或 `lua/plugins/code/` 下新增 LSP spec（如 `nvim-lspconfig` + `mason.nvim` + `mason-lspconfig.nvim`），独立于 LazyVim。
+  - 为常用语言（至少：Lua、TypeScript/JavaScript、Python、Go）配置基础 server、根目录探测、诊断样式。
+  - 使用 Snacks 或内置 `vim.diagnostic` 的 minimal UI，后续再考虑 noice 等增强。
+  - 在 `lua/config/keymaps.lua` 中补充 LSP 通用键位（如：`gd` 跳转定义、`gr` 引用、`K` 悬浮文档、`<leader>rn` 重命名、`<leader>ca` code action 等）。
+  - 在 `docs/` 中新增 LSP 专门说明，记录「安装哪些 language server、如何与 mason 集成、常用快捷键」。
 
 ---
 

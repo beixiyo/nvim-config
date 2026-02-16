@@ -14,6 +14,7 @@ return {
   { import = "plugins.snacks" },
 
   { import = "plugins.code.blink" },
+  { import = "plugins.code.lsp" },
   { import = "plugins.code.mini-pairs" },
   { import = "plugins.code.render-markdown" },
   { import = "plugins.code.treesitter" },
