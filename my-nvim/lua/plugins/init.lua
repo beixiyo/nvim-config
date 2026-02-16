@@ -4,6 +4,9 @@
 -- 按分类引入；Snacks 需优先加载（bufferline / dashboard 依赖）
 
 return {
+  -- Snacks 提供的功能（plugins.snacks 中启用）：
+  --   dashboard 欢迎页（无文件启动时）、picker 找文件/搜内容(<leader>ff/fg/fr/fc/fb/sg/sw)、explorer 文件树(<leader>e/E/fe/fE)、
+  --   terminal 终端(Ctrl+\ / <leader>ft)、notifier 通知(替代 vim.notify)、bufdelete 关 buffer(bufferline 用)、bigfile/input/quickfile
   { import = "plugins.snacks" },
   -- UI：主题、状态栏、buffer 标签、消息（欢迎页已由 Snacks.dashboard 提供）
   { import = "plugins.ui.theme" },
@@ -15,9 +18,7 @@ return {
   { import = "plugins.code.mini-pairs" },
   { import = "plugins.code.blink" },
   { import = "plugins.code.render-markdown" },
-  -- 文件：文件树（模糊查找已由 Snacks.picker 提供）
-  { import = "plugins.file.neo-tree" },
-  -- 工具：键位提示、Flash 跳转（终端已由 Snacks.terminal 提供）
+  -- 工具：键位提示、Flash 跳转
   { import = "plugins.tools.which-key" },
   { import = "plugins.tools.flash" },
 }

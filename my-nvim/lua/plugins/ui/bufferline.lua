@@ -1,7 +1,7 @@
 -- ================================
 -- 顶部 Buffer 标签页（bufferline.nvim）
 -- ================================
--- 在顶部显示 buffer 列表，类似 IDE 的标签栏；与 neo-tree 配合时留出偏移
+-- 在顶部显示 buffer 列表，类似 IDE 的标签栏；与 Snacks Explorer / 布局框配合时留出偏移
 
 return {
   "akinsho/bufferline.nvim",
@@ -17,15 +17,7 @@ return {
       diagnostics = "nvim_lsp", -- 在标签上显示 LSP 诊断
       always_show_bufferline = false, -- 只有多个缓冲区时才显示
       offsets = {
-        {
-          filetype = "neo-tree",
-          text = "Neo-tree",
-          highlight = "Directory",
-          text_align = "left",
-        },
-        {
-          filetype = "snacks_layout_box",
-        },
+        { filetype = "snacks_layout_box" },
       },
     },
   },

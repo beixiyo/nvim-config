@@ -53,7 +53,7 @@ return {
           end,
         },
       },
-      extensions = { "neo-tree", "lazy", "fzf" },
+      extensions = { "lazy", "fzf" },
     }
   end,
 }

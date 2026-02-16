@@ -1,8 +1,17 @@
 -- ================================
--- Snacks.nvim 核心（dashboard / picker / terminal / notifier / bufdelete）
+-- Snacks.nvim 核心（dashboard / picker / terminal / explorer / notifier / bufdelete）
 -- ================================
 -- 需尽早加载：bufferline 依赖 Snacks.bufdelete，dashboard 需在 VimEnter 前就绪。
 -- 文档：https://github.com/folke/snacks.nvim
+
+--- 项目根目录：优先 Git 根，否则当前工作目录（供 Explorer 用）
+local function root()
+  local ok, out = pcall(vim.fn.system, "git rev-parse --show-toplevel 2>/dev/null")
+  if ok and out and #out > 0 then
+    return vim.trim(out)
+  end
+  return vim.fn.getcwd()
+end
 
 return {
   "folke/snacks.nvim",
@@ -59,6 +68,11 @@ return {
   },
 
   keys = {
+    -- 文件树（Snacks Explorer，替代 neo-tree）
+    { "<leader>e", function() Snacks.explorer({ cwd = root() }) end, desc = "文件树 (项目根)" },
+    { "<leader>E", function() Snacks.explorer() end, desc = "文件树 (cwd)" },
+    { "<leader>fe", function() Snacks.explorer({ cwd = root() }) end, desc = "Explorer (root)" },
+    { "<leader>fE", function() Snacks.explorer() end, desc = "Explorer (cwd)" },
     -- 模糊查找（替代 fzf-lua）
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find File" },
     { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Git Files" },
