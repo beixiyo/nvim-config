@@ -5,8 +5,8 @@
 -- 文档：https://github.com/folke/snacks.nvim
 
 local utils = require("utils")
-local icons = utils.icons
-local dashboard = icons.dashboard
+local icons = utils.icons.keymaps
+local dashboard = utils.icons.dashboard
 
 return {
   "folke/snacks.nvim",
@@ -69,36 +69,56 @@ return {
   },
 
   keys = {
-    -- 文件树（Snacks Explorer，替代 neo-tree）
-    { "<leader>e", function() Snacks.explorer() end, desc = "文件树" },
-    -- 模糊查找（替代 fzf-lua）
-    { "<leader>ff", function() Snacks.picker.files() end, desc = "Find File" },
-    { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Git Files" },
-    { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent Files" },
-    { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Config Files" },
-    { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
-    { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
-    { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Grep Word", mode = { "n", "x" } },
-    -- 终端（替代 toggleterm）：Ctrl+\ 或 <leader>ft
-    { "<C-\\>", function() Snacks.terminal() end, desc = "Toggle Terminal", mode = { "n", "t" } },
-    -- 作用域检测
-    { "<leader>sj", function() Snacks.scope.jump() end, desc = "跳转到作用域" },
-    -- Git 相关 Picker
-    { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
-    { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
-    { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff" },
-    { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
-    { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
-    -- Neovim 内部 Picker（注意：避免与文件查找键位冲突）
-    { "<leader>fC", function() Snacks.picker.commands() end, desc = "Commands" },
-    { "<leader>fh", function() Snacks.picker.command_history() end, desc = "Command History" },
-    { "<leader>fR", function() Snacks.picker.registers() end, desc = "Registers" },
-    { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
-    { "<leader>fj", function() Snacks.picker.jumps() end, desc = "Jumps" },
-    { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
-    { "<leader>fT", function() Snacks.picker.todo_comments() end, desc = "Todo Comments" },
-    -- Quickfix/Location
-    { "<leader>xq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
-    { "<leader>xl", function() Snacks.picker.loclist() end, desc = "Location List" },
+    -- =======================
+    -- 1. 文件树
+    -- =======================
+    { "<leader>e", function() Snacks.explorer() end, desc = icons.explorer .. " " .. "文件树" },
+
+    -- =======================
+    -- 2. 文件查找（<leader>f 前缀）
+    -- =======================
+    { "<leader>ff", function() Snacks.picker.files() end, desc = icons.find_file .. " " .. "查找文件" },
+    { "<leader>fg", function() Snacks.picker.git_files() end, desc = icons.git_files .. " " .. "Git 文件" },
+    { "<leader>fr", function() Snacks.picker.recent() end, desc = icons.recent_files .. " " .. "最近文件" },
+    { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = icons.config_files .. " " .. "配置文件" },
+    { "<leader>fb", function() Snacks.picker.buffers() end, desc = icons.buffers .. " " .. "缓冲区" },
+
+    -- =======================
+    -- 3. 搜索（<leader>s 前缀）
+    -- =======================
+    { "<leader>sg", function() Snacks.picker.grep() end, desc = icons.grep .. " " .. "全局搜索" },
+    { "<leader>sw", function() Snacks.picker.grep_word() end, desc = icons.grep_word .. " " .. "搜索单词", mode = { "n", "x" } },
+    { "<leader>sj", function() Snacks.scope.jump() end, desc = icons.scope .. " " .. "跳转到作用域" },
+
+    -- =======================
+    -- 4. Git（<leader>g 前缀）
+    -- =======================
+    { "<leader>gs", function() Snacks.picker.git_status() end, desc = icons.git_status .. " " .. "Git 状态" },
+    { "<leader>gS", function() Snacks.picker.git_stash() end, desc = icons.git_stash .. " " .. "Git 暂存" },
+    { "<leader>gd", function() Snacks.picker.git_diff() end, desc = icons.git_diff .. " " .. "Git 差异" },
+    { "<leader>gl", function() Snacks.picker.git_log() end, desc = icons.git_log .. " " .. "Git 日志" },
+    { "<leader>gb", function() Snacks.picker.git_branches() end, desc = icons.git_branches .. " " .. "Git 分支" },
+
+    -- =======================
+    -- 5. Neovim 内部功能（<leader>f 前缀，大写字母）
+    -- =======================
+    { "<leader>fC", function() Snacks.picker.commands() end, desc = icons.commands .. " " .. "命令" },
+    { "<leader>fh", function() Snacks.picker.command_history() end, desc = icons.command_history .. " " .. "命令历史" },
+    { "<leader>fR", function() Snacks.picker.registers() end, desc = icons.registers .. " " .. "寄存器" },
+    { "<leader>fm", function() Snacks.picker.marks() end, desc = icons.marks .. " " .. "标记" },
+    { "<leader>fj", function() Snacks.picker.jumps() end, desc = icons.jumps .. " " .. "跳转历史" },
+    { "<leader>fk", function() Snacks.picker.keymaps() end, desc = icons.keymaps .. " " .. "快捷键" },
+    { "<leader>fT", function() Snacks.picker.todo_comments() end, desc = icons.todo_comments .. " " .. "待办注释" },
+
+    -- =======================
+    -- 6. Quickfix/Location（<leader>x 前缀）
+    -- =======================
+    { "<leader>xq", function() Snacks.picker.qflist() end, desc = icons.quickfix .. " " .. "Quickfix 列表" },
+    { "<leader>xl", function() Snacks.picker.loclist() end, desc = icons.location_list .. " " .. "位置列表" },
+
+    -- =======================
+    -- 7. 终端
+    -- =======================
+    { "<C-\\>", function() Snacks.terminal() end, desc = icons.terminal .. " " .. "切换终端", mode = { "n", "t" } },
   },
 }

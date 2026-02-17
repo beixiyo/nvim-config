@@ -3,6 +3,8 @@
 -- ================================
 -- 退出时自动保存布局/光标/缓冲区，启动时按当前目录（及 Git 分支）自动恢复
 
+local icons = require("utils").icons.keymaps
+
 return {
   "rmagatti/auto-session",
   lazy = false,
@@ -36,9 +38,9 @@ return {
   },
 
   keys = {
-    { "<leader>qs", "<cmd>AutoSession save<cr>", desc = "保存会话" },
-    { "<leader>ql", "<cmd>AutoSession restore<cr>", desc = "恢复会话" },
-    { "<leader>qS", "<cmd>AutoSession search<cr>", desc = "选择会话" },
-    { "<leader>qd", "<cmd>AutoSession delete<cr>", desc = "删除会话" },
+    { "<leader>qs", "<cmd>AutoSession save<cr>",    desc = icons.save .. " " .. "保存会话" },
+    { "<leader>ql", "<cmd>AutoSession restore<cr>", desc = icons.jumps .. " " .. "恢复会话" },
+    { "<leader>qS", "<cmd>AutoSession search<cr>",  desc = icons.command_history .. " " .. "选择会话" },
+    { "<leader>qd", "<cmd>AutoSession delete<cr>",  desc = icons.quit .. " " .. "删除会话" },
   },
 }

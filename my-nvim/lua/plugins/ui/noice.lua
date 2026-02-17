@@ -3,6 +3,8 @@
 -- ================================
 -- 现代化 cmdline、消息与补全浮层。:echo "发送测试消息"
 ---@module "noice"
+local icons = require("utils").icons.keymaps
+
 return {
   {
     "folke/noice.nvim",
@@ -45,7 +47,7 @@ return {
       },
     },
     keys = {
-      { "<leader>mh", function() require("noice").cmd("history") end, desc = "消息历史" },
+      { "<leader>mh", function() require("noice").cmd("history") end, desc = icons.command_history .. " " .. "消息历史" },
       {
         "<leader>mc",
         function()
@@ -113,7 +115,7 @@ return {
             end, 500) -- 等待 500ms 让窗口完全渲染
           end)
         end,
-        desc = "复制所有消息历史（包括启动错误）",
+        desc = icons.copy .. " " .. "复制消息历史",
       },
     },
     config = function(_, opts)

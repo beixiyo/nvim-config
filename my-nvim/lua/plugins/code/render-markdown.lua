@@ -4,6 +4,8 @@
 -- 在缓冲区中美化显示 Markdown：标题图标/背景、代码块、列表符号、引用、表格等。
 -- 需要 nerd font。命令：:RenderMarkdown toggle / :RenderMarkdown preview
 
+local icons = require("utils").icons.keymaps
+
 return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
@@ -34,14 +36,14 @@ return {
         function()
           require("render-markdown").toggle()
         end,
-        desc = "Markdown 渲染 开/关",
+        desc = icons.todo_comments .. " " .. "Markdown 渲染 开/关",
       },
       {
         "<leader>mp",
         function()
           require("render-markdown").preview()
         end,
-        desc = "Markdown 预览（侧边）",
+        desc = icons.todo_comments .. " " .. "Markdown 预览（侧边）",
       },
     },
   },

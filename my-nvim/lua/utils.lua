@@ -3,82 +3,135 @@ local M = {}
 M.icons = {
   misc = {
     dots = "󰇘",
-    clock = " ",
+    clock = "",
   },
   dashboard = {
-    find_file = " ",
-    new_file = " ",
-    find_text = " ",
-    recent_files = " ",
-    config = " ",
-    session = " ",
-    lazy = "󰒲 ",
-    quit = " ",
+    find_file = "",
+    new_file = "",
+    find_text = "",
+    recent_files = "",
+    config = "",
+    session = "",
+    lazy = "󰒲",
+    quit = "",
   },
   ft = {
-    octo = " ",
-    gh = " ",
-    ["markdown.gh"] = " ",
+    octo = "",
+    gh = "",
+    ["markdown.gh"] = "",
   },
   dap = {
-    Stopped             = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
-    Breakpoint          = " ",
-    BreakpointCondition = " ",
-    BreakpointRejected  = { " ", "DiagnosticError" },
+    Stopped             = { "󰁕", "DiagnosticWarn", "DapStoppedLine" },
+    Breakpoint          = "",
+    BreakpointCondition = "",
+    BreakpointRejected  = { "", "DiagnosticError" },
     LogPoint            = ".>",
   },
   diagnostics = {
-    Error = " ",
-    Warn  = " ",
-    Hint  = " ",
-    Info  = " ",
+    Error = "",
+    Warn  = "",
+    Hint  = "",
+    Info  = "",
   },
   git = {
-    added    = " ",
-    modified = " ",
-    removed  = " ",
+    added    = "",
+    modified = "",
+    removed  = "",
   },
   kinds = {
-    Array         = " ",
-    Boolean       = "󰨙 ",
-    Class         = " ",
-    Codeium       = "󰘦 ",
-    Color         = " ",
-    Control       = " ",
-    Collapsed     = " ",
-    Constant      = "󰏿 ",
-    Constructor   = " ",
-    Copilot       = " ",
-    Enum          = " ",
-    EnumMember    = " ",
-    Event         = " ",
-    Field         = " ",
-    File          = " ",
-    Folder        = " ",
-    Function      = "󰊕 ",
-    Interface     = " ",
-    Key           = " ",
-    Keyword       = " ",
-    Method        = "󰊕 ",
-    Module        = " ",
-    Namespace     = "󰦮 ",
-    Null          = " ",
-    Number        = "󰎠 ",
-    Object        = " ",
-    Operator      = " ",
-    Package       = " ",
-    Property      = " ",
-    Reference     = " ",
-    Snippet       = "󱄽 ",
-    String        = " ",
-    Struct        = "󰆼 ",
-    Supermaven    = " ",
-    TabNine       = "󰏚 ",
-    Text          = " ",
-    TypeParameter = " ",
-    Unit          = " ",
-    Value         = " ",
-    Variable      = "󰀫 ",
+    Array         = "",
+    Boolean       = "󰨙",
+    Class         = "",
+    Codeium       = "󰘦",
+    Color         = "",
+    Control       = "",
+    Collapsed     = "",
+    Constant      = "󰏿",
+    Constructor   = "",
+    Copilot       = "",
+    Enum          = "",
+    EnumMember    = "",
+    Event         = "",
+    Field         = "",
+    File          = "",
+    Folder        = "",
+    Function      = "󰊕",
+    Interface     = "",
+    Key           = "",
+    Keyword       = "",
+    Method        = "󰊕",
+    Module        = "",
+    Namespace     = "󰦮",
+    Null          = "",
+    Number        = "󰎠",
+    Object        = "",
+    Operator      = "",
+    Package       = "",
+    Property      = "",
+    Reference     = "",
+    Snippet       = "󱄽",
+    String        = "",
+    Struct        = "󰆼",
+    Supermaven    = "",
+    TabNine       = "󰏚",
+    Text          = "",
+    TypeParameter = "",
+    Unit          = "",
+    Value         = "",
+    Variable      = "󰀫",
+  },
+  keymaps = {
+    -- 文件相关
+    find_file = "󰈔",
+    git_files = "󰊢",
+    recent_files = "󰄉",
+    config_files = "󰒓",
+    buffers = "󰈙",
+    explorer = "󰉓",
+    -- 搜索相关
+    grep = "󰍉",
+    grep_word = "󰦨",
+    scope = "󰨞",
+    -- 诊断相关
+    diagnostics = "",
+    -- 编辑/光标相关
+    cursor = "󰇀",
+    -- Git 相关
+    git_status = "󰊢",
+    git_stash = "󰆍",
+    git_diff = "󰉼",
+    git_log = "󰜂",
+    git_branches = "󰘬",
+    -- 窗口管理
+    window_left = "󰁍",
+    window_right = "󰁔",
+    window_up = "󰁑",
+    window_down = "󰁐",
+    -- 编辑操作
+    move_down = "󰁐",
+    move_up = "󰁑",
+    copy = "󰅌",
+    -- 导航
+    prev = "󰁍",
+    next = "󰁔",
+    -- 其他
+    terminal = "󰆍",
+    quit = "󰩟",
+    save = "󰄉",
+    exit_insert = "󰩟",
+    -- Neovim 内部功能
+    commands = "󰆍",
+    command_history = "󰄉",
+    registers = "󰆍",
+    marks = "󰁴",
+    jumps = "󰁍",
+    keymaps = "󰌌",
+    todo_comments = "󰄬",
+    -- Quickfix
+    quickfix = "󰈔",
+    location_list = "󰈔",
+    -- 消息
+    message = "󰍩",
   },
 }
 
@@ -97,21 +150,21 @@ end
 local function get_root(buf)
   buf = buf or vim.api.nvim_get_current_buf()
   local bufpath = vim.api.nvim_buf_get_name(buf)
-  
+
   if bufpath == "" then
     bufpath = vim.uv.cwd()
   else
     bufpath = vim.fs.dirname(bufpath)
   end
-  
+
   -- 查找项目根目录（.git、.gitignore、package.json 等）
   local root_patterns = { ".git", ".gitignore", "package.json", "Cargo.toml", "go.mod", "pyproject.toml", "lua" }
   local root = vim.fs.find(root_patterns, { path = bufpath, upward = true })[1]
-  
+
   if root then
     return norm(vim.fs.dirname(root))
   end
-  
+
   -- 如果没有找到，返回当前工作目录
   return norm(vim.uv.cwd())
 end
