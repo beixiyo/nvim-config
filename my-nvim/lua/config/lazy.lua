@@ -38,7 +38,11 @@ vim.opt.rtp:prepend(lazypath)
 local lockfile_path = vim.fn.stdpath("config") .. "/lazy-lock.json"
 
 require("lazy").setup({
-  spec = { { import = "plugins" } },
+  -- LazyVim 原版导入所有插件
+  -- spec = { { import = "plugins" } },
+
+  -- 自定义管理插件列表
+  spec = require("plugins"),
   defaults = { lazy = false, version = false },
   lockfile = lockfile_path,
   install = { colorscheme = { "tokyonight", "habamax" } },
