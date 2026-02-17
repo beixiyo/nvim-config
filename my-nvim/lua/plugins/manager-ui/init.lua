@@ -152,8 +152,31 @@ local function setup_keymaps(buf, win, picks, id_to_entry, toggle_callback)
   local opts = { noremap = true, silent = true, buffer = buf }
   vim.keymap.set("n", "<CR>", toggle_callback, opts)
   vim.keymap.set("n", "x", toggle_callback, opts)
-  vim.keymap.set("n", "q", function() vim.api.nvim_win_close(win, true) end, opts)
-  vim.keymap.set("n", "<Esc>", function() vim.api.nvim_win_close(win, true) end, opts)
+  
+  local function close_and_ensure_dashboard()
+    vim.api.nvim_win_close(win, true)
+    -- 关闭后检查是否还有 dashboard 窗口，如果没有就打开 dashboard
+    vim.schedule(function()
+      local has_dashboard = false
+      for _, w in ipairs(vim.api.nvim_list_wins()) do
+        local ok, ft = pcall(function()
+          return vim.bo[vim.api.nvim_win_get_buf(w)].filetype
+        end)
+        if ok and ft == "snacks_dashboard" then
+          has_dashboard = true
+          break
+        end
+      end
+      if not has_dashboard then
+        pcall(function()
+          require("snacks").dashboard.open()
+        end)
+      end
+    end)
+  end
+  
+  vim.keymap.set("n", "q", close_and_ensure_dashboard, opts)
+  vim.keymap.set("n", "<Esc>", close_and_ensure_dashboard, opts)
 end
 
 function M.open()

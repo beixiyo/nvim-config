@@ -146,6 +146,11 @@ return {
           return
         end
 
+        -- 如果关闭的是 PluginManager，也直接返回，避免干扰 dashboard
+        if ok_ft and ft == "PluginManager" then
+          return
+        end
+
         -- 等 buffer 真正被删除后再检查剩余 buffer
         vim.schedule(function()
           local infos = vim.fn.getbufinfo({ buflisted = 1 })
@@ -164,8 +169,8 @@ return {
             end)
 
             if ok and ok2 then
-              -- 忽略 dashboard、自身的 [No Name]、终端等特殊 buffer
-              if ft2 ~= "snacks_dashboard" and bt == "" and name ~= "" then
+              -- 忽略 dashboard、PluginManager、自身的 [No Name]、终端等特殊 buffer
+              if ft2 ~= "snacks_dashboard" and ft2 ~= "PluginManager" and bt == "" and name ~= "" then
                 has_real_file = true
                 break
               end
