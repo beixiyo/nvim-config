@@ -11,7 +11,7 @@
 -- - lualine 已从 `vim.b.gitsigns_status_dict` 读取统计信息（added/changed/removed）
 -- - 这里只负责启用插件和基础按键，Git 相关「列表视图」仍用 Snacks.picker
 
-local icons = require("utils").icons.keymaps
+local icons = require("utils").icons
 
 return {
   "lewis6991/gitsigns.nvim",

@@ -4,7 +4,7 @@
 -- leader 已在 config/options.lua 中设为空格；此处只放通用映射，插件相关键位可在插件 spec 里配置
 
 local utils = require("utils")
-local icons = utils.icons.keymaps
+local icons = utils.icons
 
 -- 包装函数：默认 silent = true，自动删除冲突映射
 local function map(mode, lhs, rhs, opts)

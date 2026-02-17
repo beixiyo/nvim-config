@@ -4,7 +4,7 @@
 -- 在缓冲区中美化显示 Markdown：标题图标/背景、代码块、列表符号、引用、表格等。
 -- 需要 nerd font。命令：:RenderMarkdown toggle / :RenderMarkdown preview
 
-local icons = require("utils").icons.keymaps
+local icons = require("utils").icons
 
 return {
   {

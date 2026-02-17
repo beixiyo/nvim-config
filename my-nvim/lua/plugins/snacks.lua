@@ -5,8 +5,7 @@
 -- 文档：https://github.com/folke/snacks.nvim
 
 local utils = require("utils")
-local icons = utils.icons.keymaps
-local dashboard = utils.icons.dashboard
+local icons = utils.icons
 
 return {
   "folke/snacks.nvim",
@@ -71,14 +70,14 @@ return {
 
         ---@type snacks.dashboard.Item[]
         keys = {
-          { icon = dashboard.find_file,    key = "f", desc = "Find File",       action = ":lua Snacks.dashboard.pick('files')" },
-          { icon = dashboard.new_file,     key = "n", desc = "New File",        action = ":ene | startinsert" },
-          { icon = dashboard.find_text,    key = "g", desc = "Find Text",       action = ":lua Snacks.dashboard.pick('live_grep')" },
-          { icon = dashboard.recent_files, key = "r", desc = "Recent Files",    action = ":lua Snacks.dashboard.pick('oldfiles')" },
-          { icon = dashboard.config,       key = "c", desc = "Config",          action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-          { icon = dashboard.session,      key = "s", desc = "Restore Session", action = ":AutoSession search" },
-          { icon = dashboard.lazy,         key = "l", desc = "Lazy",            action = ":Lazy" },
-          { icon = dashboard.quit,         key = "q", desc = "Quit",            action = ":qa" },
+          { icon = icons.dashboard_find_file,    key = "f", desc = "Find File",       action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = icons.dashboard_new_file,     key = "n", desc = "New File",        action = ":ene | startinsert" },
+          { icon = icons.dashboard_find_text,    key = "g", desc = "Find Text",       action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = icons.dashboard_recent_files, key = "r", desc = "Recent Files",    action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = icons.dashboard_config,       key = "c", desc = "Config",          action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+          { icon = icons.dashboard_session,      key = "s", desc = "Restore Session", action = ":AutoSession search" },
+          { icon = icons.dashboard_lazy,         key = "l", desc = "Lazy",            action = ":Lazy" },
+          { icon = icons.dashboard_quit,         key = "q", desc = "Quit",            action = ":qa" },
         },
       },
 

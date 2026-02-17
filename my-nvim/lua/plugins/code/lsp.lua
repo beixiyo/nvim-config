@@ -1,6 +1,11 @@
 local Icons = require("utils").icons
-local icons = Icons.keymaps
-local diag_icons = Icons.diagnostics
+local icons = Icons
+local diag_icons = {
+  Error = Icons.diagnostics_error,
+  Warn = Icons.diagnostics_warn,
+  Hint = Icons.diagnostics_hint,
+  Info = Icons.diagnostics_info,
+}
 
 return {
   "mason-org/mason-lspconfig.nvim",

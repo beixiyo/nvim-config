@@ -4,7 +4,7 @@
 -- 类 VSCode 多光标：匹配词/选区加光标、上下行加光标、Ctrl+左键点击加/删光标
 -- 文档：:h multicursor
 
-local icons = require("utils").icons.keymaps
+local icons = require("utils").icons
 
 return {
   "jake-stewart/multicursor.nvim",

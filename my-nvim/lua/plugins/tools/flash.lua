@@ -2,7 +2,7 @@
 -- 文档：https://github.com/folke/flash.nvim
 ---@module "flash"
 
-local icons = require("utils").icons.keymaps
+local icons = require("utils").icons
 
 return {
   "folke/flash.nvim",

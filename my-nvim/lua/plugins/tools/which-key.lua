@@ -4,7 +4,7 @@
 -- 按 leader 或前缀键时弹出可用键位说明，帮助记忆和发现键位
 -- 文档：https://github.com/folke/which-key.nvim
 
-local icons = require("utils").icons.keymaps
+local icons = require("utils").icons
 
 return {
   {

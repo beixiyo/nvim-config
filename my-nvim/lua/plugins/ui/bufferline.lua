@@ -41,7 +41,7 @@ return {
     })
 
     -- 键位：前后 buffer 切换（与窗口 Ctrl-hjkl 区分，用 Shift）
-    local icons = require("utils").icons.keymaps
+    local icons = require("utils").icons
     local map = vim.keymap.set
     map("n", "<S-h>", "<Cmd>BufferLineCyclePrev<Cr>", { desc = icons.buffers .. " " .. "上一个 buffer", silent = true })
     map("n", "<S-l>", "<Cmd>BufferLineCycleNext<Cr>", { desc = icons.buffers .. " " .. "下一个 buffer", silent = true })

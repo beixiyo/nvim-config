@@ -141,10 +141,10 @@ return {
             -- LSP 诊断：错误/警告/信息/提示
             "diagnostics",
             symbols = {
-              error = icons.diagnostics.Error .. " ",
-              warn = icons.diagnostics.Warn .. " ",
-              info = icons.diagnostics.Info .. " ",
-              hint = icons.diagnostics.Hint .. " ",
+              error = icons.diagnostics_error .. " ",
+              warn = icons.diagnostics_warn .. " ",
+              info = icons.diagnostics_info .. " ",
+              hint = icons.diagnostics_hint .. " ",
             },
           },
           -- 当前文件类型图标（仅图标）
@@ -165,15 +165,15 @@ return {
 
               local p = lsp_progress()
               if p ~= "" then
-                return icons.misc.lsp .. " " .. p
+                return icons.lsp .. " " .. p
               end
 
               local c = lsp_clients()
               if c ~= "" then
-                return icons.misc.lsp .. " " .. c
+                return icons.lsp .. " " .. c
               end
 
-              return icons.misc.lsp .. " NoLSP"
+              return icons.lsp .. " NoLSP"
             end,
             cond = function()
               return lsp_should_show()
@@ -193,7 +193,7 @@ return {
           },
           {
             -- DAP 调试状态
-            function() return icons.dap.status .. " " .. require("dap").status() end,
+            function() return icons.dap_status .. " " .. require("dap").status() end,
             cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
             color = function() return { fg = Snacks.util.color("Debug") } end,
           },
@@ -207,9 +207,9 @@ return {
             -- Git diff 统计（来自 gitsigns buffer 状态）
             "diff",
             symbols = {
-              added = icons.git.added .. " ",
-              modified = icons.git.modified .. " ",
-              removed = icons.git.removed .. " ",
+              added = icons.git_added .. " ",
+              modified = icons.git_modified .. " ",
+              removed = icons.git_removed .. " ",
             },
             source = function()
               local gitsigns = vim.b.gitsigns_status_dict
@@ -231,7 +231,7 @@ return {
         lualine_z = {
           -- 右侧时钟
           function()
-            return icons.misc.clock .. " " .. os.date("%R")
+            return icons.clock .. " " .. os.date("%R")
           end,
         },
       },

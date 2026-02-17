@@ -3,7 +3,7 @@
 -- ================================
 -- 现代化 cmdline、消息与补全浮层。:echo "发送测试消息"
 ---@module "noice"
-local icons = require("utils").icons.keymaps
+local icons = require("utils").icons
 
 return {
   {

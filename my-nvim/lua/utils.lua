@@ -1,45 +1,108 @@
 local M = {}
 
+-- 统一的图标表：不再按「用途」嵌套多级，而是用更语义化的 key 直接描述图标含义
+-- 约定：
+-- - 通用：直接用语义名，如 `lsp` / `clock`
+-- - Dashboard：前缀 `dashboard_`
+-- - 文件类型：前缀 `ft_`
+-- - DAP：前缀 `dap_`
+-- - 诊断相关：前缀 `diagnostics_`
+-- - Git 相关：前缀 `git_`
 M.icons = {
-  misc = {
-    dots = "󰇘",
-    clock = "",
-    lsp = "",
-  },
-  dashboard = {
-    find_file = "",
-    new_file = "",
-    find_text = "",
-    recent_files = "",
-    config = "",
-    session = "",
-    lazy = "󰒲",
-    quit = "",
-  },
-  ft = {
-    octo = "",
-    gh = "",
-    ["markdown.gh"] = "",
-  },
-  dap = {
-    Stopped             = { "󰁕", "DiagnosticWarn", "DapStoppedLine" },
-    Breakpoint          = "",
-    BreakpointCondition = "",
-    BreakpointRejected  = { "", "DiagnosticError" },
-    LogPoint            = ".>",
-    status              = "",
-  },
-  diagnostics = {
-    Error = "",
-    Warn  = "",
-    Hint  = "",
-    Info  = "",
-  },
-  git = {
-    added    = "",
-    modified = "",
-    removed  = "",
-  },
+  -- 通用 / 杂项
+  dots = "󰇘",
+  clock = "",
+  lsp = "",
+
+  -- Dashboard
+  dashboard_find_file = "",
+  dashboard_new_file = "",
+  dashboard_find_text = "",
+  dashboard_recent_files = "",
+  dashboard_config = "",
+  dashboard_session = "",
+  dashboard_lazy = "󰒲",
+  dashboard_quit = "",
+
+  -- 文件类型相关
+  ft_octo = "",
+  ft_gh = "",
+  ft_markdown_gh = "",
+
+  -- DAP / 调试
+  dap_stopped = { "󰁕", "DiagnosticWarn", "DapStoppedLine" },
+  dap_breakpoint = "",
+  dap_breakpoint_condition = "",
+  dap_breakpoint_rejected = { "", "DiagnosticError" },
+  dap_log_point = ".>",
+  dap_status = "",
+
+  -- 诊断
+  diagnostics_error = "",
+  diagnostics_warn = "",
+  diagnostics_hint = "",
+  diagnostics_info = "",
+
+  -- Git
+  git_added = "",
+  git_modified = "",
+  git_removed = "",
+
+  -- 键位 / 操作相关（原 keymaps 下的图标）
+  -- 文件相关
+  find_file = "󰈔",
+  git_files = "󰊢",
+  recent_files = "󰋚",
+  config_files = "󰒓",
+  buffers = "󰈙",
+  explorer = "󰉓",
+  -- 搜索相关
+  grep = "󰍉",
+  grep_word = "󰦨",
+  scope = "󰨞",
+  -- 诊断相关
+  diagnostics = "",
+  -- 编辑/光标相关
+  cursor = "󰇀",
+  -- Git 相关
+  git_status = "󰊢",
+  git_stash = "󰆍",
+  git_diff = "󰉼",
+  git_log = "󰜂",
+  git_branches = "󰘬",
+  -- 窗口管理
+  arrow_left = "󰁍",
+  arrow_right = "󰁔",
+  arrow_up = "󰁑",
+  arrow_down = "󰁐",
+  window = "󱂬",
+  -- 编辑操作
+  move_down = "󰁐",
+  move_up = "󰁑",
+  copy = "󰅌",
+  -- 导航
+  prev = "󰁍",
+  next = "󰁔",
+  -- 其他
+  terminal = "󰆍",
+  quit = "",
+  save = "󰆓",
+  exit_insert = "󰩟",
+  -- Neovim 内部功能
+  commands = "󰘳",
+  command_history = "󰋚",
+  registers = "󰱼",
+  marks = "󰆤",
+  jumps = "󰘈",
+  keymaps = "󰌌",
+  todo_comments = "󰄬",
+  -- Quickfix
+  quickfix = "󰈸",
+  location_list = "󰉁",
+  -- 消息
+  message = "󰍩",
+
+  -- LSP completion kind 图标
   kinds = {
     Array         = "",
     Boolean       = "󰨙",
@@ -81,61 +144,7 @@ M.icons = {
     Unit          = "",
     Value         = "",
     Variable      = "󰀫",
-  },
-  keymaps = {
-    -- 文件相关
-    find_file = "󰈔",
-    git_files = "󰊢",
-    recent_files = "󰋚",
-    config_files = "󰒓",
-    buffers = "󰈙",
-    explorer = "󰉓",
-    -- 搜索相关
-    grep = "󰍉",
-    grep_word = "󰦨",
-    scope = "󰨞",
-    -- 诊断相关
-    diagnostics = "",
-    -- 编辑/光标相关
-    cursor = "󰇀",
-    -- Git 相关
-    git_status = "󰊢",
-    git_stash = "󰆍",
-    git_diff = "󰉼",
-    git_log = "󰜂",
-    git_branches = "󰘬",
-    -- 窗口管理
-    arrow_left = "󰁍",
-    arrow_right = "󰁔",
-    arrow_up = "󰁑",
-    arrow_down = "󰁐",
-    window = "󱂬",
-    -- 编辑操作
-    move_down = "󰁐",
-    move_up = "󰁑",
-    copy = "󰅌",
-    -- 导航
-    prev = "󰁍",
-    next = "󰁔",
-    -- 其他
-    terminal = "󰆍",
-    quit = "",
-    save = "󰆓",
-    exit_insert = "󰩟",
-    -- Neovim 内部功能
-    commands = "󰘳",
-    command_history = "󰋚",
-    registers = "󰱼",
-    marks = "󰆤",
-    jumps = "󰘈",
-    keymaps = "󰌌",
-    todo_comments = "󰄬",
-    -- Quickfix
-    quickfix = "󰈸",
-    location_list = "󰉁",
-    -- 消息
-    message = "󰍩",
-  },
+  }
 }
 
 -- 工具函数：规范化路径

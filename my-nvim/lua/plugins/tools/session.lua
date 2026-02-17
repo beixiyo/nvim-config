@@ -3,7 +3,7 @@
 -- ================================
 -- 退出时自动保存布局/光标/缓冲区，启动时按当前目录（及 Git 分支）自动恢复
 
-local icons = require("utils").icons.keymaps
+local icons = require("utils").icons
 
 return {
   "rmagatti/auto-session",
