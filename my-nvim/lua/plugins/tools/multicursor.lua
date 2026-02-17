@@ -30,13 +30,13 @@ return {
     set({ "n", "x" }, "<leader>N", function() mc.matchAddCursor(-1) end, { desc = icons.cursor .. " " .. "多光标: 上一处匹配加光标" })
     set({ "n", "x" }, "<leader>S", function() mc.matchSkipCursor(-1) end, { desc = icons.cursor .. " " .. "多光标: 跳过上一处" })
 
-    -- 鼠标：Ctrl+左键 添加/移除光标（要 Alt+点击可改为 <a-leftmouse>）
-    set("n", "<c-leftmouse>", mc.handleMouse, { desc = icons.cursor .. " " .. "多光标: 点击处加/删光标" })
-    set("n", "<c-leftdrag>", mc.handleMouseDrag, { desc = icons.cursor .. " " .. "多光标: 拖拽" })
-    set("n", "<c-leftrelease>", mc.handleMouseRelease, { desc = icons.cursor .. " " .. "多光标: 释放" })
+    -- 鼠标：Alt+左键 添加/移除光标
+    set("n", "<A-leftmouse>", mc.handleMouse, { desc = icons.cursor .. " " .. "多光标: 点击处加/删光标" })
+    set("n", "<A-leftdrag>", mc.handleMouseDrag, { desc = icons.cursor .. " " .. "多光标: 拖拽" })
+    set("n", "<A-leftrelease>", mc.handleMouseRelease, { desc = icons.cursor .. " " .. "多光标: 释放" })
 
     -- 多光标时：启用/禁用所有光标
-    set({ "n", "x" }, "<c-q>", mc.toggleCursor, { desc = icons.cursor .. " " .. "多光标: 切换光标启用/禁用" })
+    set({ "n", "x" }, "<A-q>", mc.toggleCursor, { desc = icons.cursor .. " " .. "多光标: 切换光标启用/禁用" })
 
     -- 多光标专用键层（仅在有多个光标时生效）
     mc.addKeymapLayer(function(layerSet)

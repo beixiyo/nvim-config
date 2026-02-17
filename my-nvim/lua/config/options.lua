@@ -41,3 +41,10 @@ opt.timeoutlen = 300 -- 组合键/映射等待时间（例如 leader 触发）
 
 -- 会话保存/恢复内容（auto-session 依赖此项）
 opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions" -- session 要保存/恢复的内容
+
+-- Neovide 配置
+if vim.g.neovide then
+	vim.o.guifont = "Maple Mono NF:h10"
+	vim.g.neovide_confirm_quit = true
+	vim.g.neovide_remember_window_size = true
+end
