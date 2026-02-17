@@ -11,6 +11,9 @@ return {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     },
+    cond = function()
+      return not vim.g.vscode -- 在 VSCode 中禁用此插件
+    end,
     ---@type NoiceConfig
     opts = {
       -- LSP：用 Noice 的 Markdown 渲染替代默认，hover/签名等文档更美观

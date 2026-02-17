@@ -11,6 +11,9 @@ return {
   event = "InsertEnter",
   dependencies = { "rafamadriz/friendly-snippets" },
   version = "1.*",
+  cond = function()
+    return not vim.g.vscode -- 在 VSCode 中禁用此插件（VSCode 已有内置补全）
+  end,
 
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config

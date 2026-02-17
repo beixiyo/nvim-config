@@ -7,6 +7,9 @@
 return {
   "jake-stewart/multicursor.nvim",
   branch = "1.0",
+  cond = function()
+    return not vim.g.vscode -- 在 VSCode 中禁用此插件（VSCode 已有内置多光标）
+  end,
   config = function()
     local mc = require("multicursor-nvim")
     mc.setup()

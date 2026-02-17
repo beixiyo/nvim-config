@@ -8,6 +8,9 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy", -- 延迟加载，减少启动时间
+    cond = function()
+      return not vim.g.vscode -- 在 VSCode 中禁用此插件
+    end,
     opts = {
       -- 界面风格：classic | modern | helix | false
       preset = "helix",

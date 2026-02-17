@@ -7,6 +7,9 @@ return {
   {
     dir = vim.fn.stdpath("config") .. "/tokyonight.nvim",
     lazy = false,
+    cond = function()
+      return not vim.g.vscode -- 在 VSCode 中禁用此插件
+    end,
     config = function()
       require("tokyonight").load({ style = "night" })
     end,

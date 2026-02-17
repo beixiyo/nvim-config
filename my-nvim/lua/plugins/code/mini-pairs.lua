@@ -3,6 +3,9 @@
 return {
   "nvim-mini/mini.pairs",
   event = "VeryLazy",
+  cond = function()
+    return not vim.g.vscode -- 在 VSCode 中禁用此插件（VSCode 已有自动配对）
+  end,
   opts = {
     modes = {
       insert = true,

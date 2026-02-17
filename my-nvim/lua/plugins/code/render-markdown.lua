@@ -12,6 +12,9 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
+    cond = function()
+      return not vim.g.vscode -- 在 VSCode 中禁用此插件（VSCode 已有 Markdown 预览）
+    end,
 
     ---@module 'render-markdown'
     ---@type render.md.UserConfig

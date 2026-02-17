@@ -8,6 +8,9 @@ return {
   version = "*",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   event = "VeryLazy",
+  cond = function()
+    return not vim.g.vscode -- 在 VSCode 中禁用此插件
+  end,
   ---@type bufferline.Options
   opts = {
     options = { -- bufferline 的核心配置

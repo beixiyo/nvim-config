@@ -10,6 +10,9 @@ return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
   dependencies = { "nvim-tree/nvim-web-devicons" },
+  cond = function()
+    return not vim.g.vscode -- 在 VSCode 中禁用此插件
+  end,
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
     if vim.fn.argc(-1) > 0 then

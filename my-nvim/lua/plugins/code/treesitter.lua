@@ -4,6 +4,9 @@ return {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
     build = ':TSUpdate',
+    cond = function()
+      return not vim.g.vscode -- 在 VSCode 中禁用此插件（可选，VSCode 已有语法高亮）
+    end,
     config = function()
       local TS = require('nvim-treesitter')
 
@@ -56,6 +59,9 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-context",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    cond = function()
+      return not vim.g.vscode -- 在 VSCode 中禁用此插件
+    end,
     opts = {
       enable = true,
       max_lines = 0, -- 0 表示不限高度

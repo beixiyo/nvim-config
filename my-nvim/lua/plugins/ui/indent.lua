@@ -3,6 +3,9 @@
 return {
   'lukas-reineke/indent-blankline.nvim',
   main = 'ibl',
+  cond = function()
+    return not vim.g.vscode -- 在 VSCode 中禁用此插件
+  end,
 
   ---@module "ibl"
   ---@type ibl.config

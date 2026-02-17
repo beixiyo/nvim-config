@@ -38,15 +38,6 @@ end, { desc = 'mini.files 文件浏览' })
 -- Ctrl+C 复制（类似 VSCode 的复制快捷键）
 -- 可视模式：复制选中内容到系统剪贴板
 map("v", "<C-c>", '"+y', { desc = "复制到系统剪贴板", silent = true })
--- 注意：在普通模式下，Ctrl+C 通常用于中断命令，不建议覆盖
-
--- Ctrl+V 粘贴（类似 VSCode 的粘贴快捷键）
--- 普通模式：在光标后粘贴系统剪贴板内容
-map("n", "<C-v>", '"+p', { desc = "粘贴系统剪贴板内容", silent = true })
--- 插入模式：在当前位置粘贴系统剪贴板内容
-map("i", "<C-v>", "<C-r>+", { desc = "粘贴系统剪贴板内容", silent = true })
--- 可视模式：替换选中内容为系统剪贴板内容
-map("v", "<C-v>", '"+p', { desc = "粘贴系统剪贴板内容", silent = true })
 
 -- Alt + Shift + (j/k) 复制行（类似 VSCode 的 Alt + Shift + Up/Down）
 -- 普通模式：复制当前行到上一行/下一行
@@ -104,13 +95,20 @@ map({ "n", "t" }, "<C-`>", function()
   end
 
   -- 查找是否有其他显示的终端窗口
+  local terminal_wins = {}
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
     if vim.bo[buf].buftype == "terminal" then
-      -- 找到终端窗口，关闭它
-      vim.api.nvim_win_close(win, false)
-      return
+      table.insert(terminal_wins, win)
     end
+  end
+
+  -- 如果找到终端窗口，关闭所有终端窗口
+  if #terminal_wins > 0 then
+    for _, win in ipairs(terminal_wins) do
+      vim.api.nvim_win_close(win, false)
+    end
+    return
   end
 
   -- 如果没有找到显示的终端窗口，打开新终端
