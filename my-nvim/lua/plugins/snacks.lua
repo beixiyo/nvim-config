@@ -15,31 +15,51 @@ return {
   ---@type snacks.Config
   opts = {
     -- 以下需显式启用（会注册 autocmd 等）
-    bigfile = { enabled = true },      -- 大文件检测：自动为大文件禁用某些功能以提升性能
-    explorer = { enabled = true },     -- 文件浏览器：提供类似 neo-tree 的文件树功能
-    indent = { enabled = false },      -- 缩进线：显示缩进指示线（已禁用，使用其他插件）
-    input = { enabled = true },        -- 输入框：提供现代化的输入对话框
-    notifier = { enabled = true },     -- 通知系统：统一的消息通知显示
-    picker = {                         -- 选择器：模糊查找文件、文本等（替代 fzf-lua）
+    bigfile = { enabled = true },  -- 大文件检测：自动为大文件禁用某些功能以提升性能
+    explorer = { enabled = true }, -- 文件浏览器：提供类似 neo-tree 的文件树功能
+    indent = { enabled = false },  -- 缩进线：显示缩进指示线（已禁用，使用其他插件）
+    input = { enabled = true },    -- 输入框：提供现代化的输入对话框
+    notifier = { enabled = true }, -- 通知系统：统一的消息通知显示
+    picker = {                     -- 选择器：模糊查找文件、文本等（替代 fzf-lua）
       enabled = true,
+      -- 路径格式化：文件路径右侧保持完整，左侧用省略号截断
+      formatters = {
+        file = {
+          truncate = "left",
+        },
+      },
       layout = {
         config = function(layout)
           local box = layout.layout or {}
 
           -- 认为这是侧边栏布局，不动它
           if box.position == "left" then
+            box.width = 0.18
             box.min_width = 140
-            box.width = 0.16
             layout.layout = box
-            return layout
+          else
+            -- 其它 picker（files / grep 等）使用左右分栏：
+            -- 左侧（输入 + 列表）固定 35 列，右侧预览占用剩余宽度
+            layout.layout = {
+              box = "horizontal",
+              width = 0.99,
+              height = 0.98,
+              min_width = 140,
+              {
+                box = "vertical",
+                border = true,
+                title = "{title} {live} {flags}",
+                width = 38,
+                { win = "input", height = 1, border = "bottom" },
+                { win = "list", border = "none" },
+              },
+              {
+                win = "preview",
+                title = "{preview}",
+                border = true,
+              },
+            }
           end
-
-          -- 其它 picker（files / grep 等）放大到接近全屏
-          box.width = 0.98
-          box.height = 0.98
-          box.min_width = 140
-          layout.layout = box
-          return layout
         end,
       },
     },
@@ -95,8 +115,8 @@ return {
     -- 让 Snacks 的路径颜色更亮一些
     vim.api.nvim_create_autocmd("VimEnter", {
       callback = function()
-        vim.api.nvim_set_hl(0, "SnacksPickerDir",         { fg = "#787878" })
-        vim.api.nvim_set_hl(0, "SnacksPickerPathHidden",  { fg = "#565f89" })
+        vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = "#787878" })
+        vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = "#565f89" })
         vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { fg = "#565f89" })
 
         -- 或者方式 2：link 到你主题里比较清晰的高亮组
