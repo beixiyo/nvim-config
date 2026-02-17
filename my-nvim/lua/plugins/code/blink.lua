@@ -7,9 +7,10 @@
 local utils = require("utils")
 
 return {
-  'saghen/blink.cmp',
-  dependencies = { 'rafamadriz/friendly-snippets' },
-  version = '1.*',
+  "saghen/blink.cmp",
+  event = "InsertEnter",
+  dependencies = { "rafamadriz/friendly-snippets" },
+  version = "1.*",
 
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config

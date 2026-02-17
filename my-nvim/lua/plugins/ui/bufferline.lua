@@ -26,12 +26,14 @@ return {
     local bufferline = require("bufferline")
     bufferline.setup(opts)
 
-    -- Fix bufferline when restoring a session
+    -- Fix bufferline when restoring a session（仅当 bufferline 已注册全局后再调用）
     vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete" }, {
       callback = function()
-        vim.schedule(function()
-          pcall(nvim_bufferline)
-        end)
+        if _G.nvim_bufferline then
+          vim.schedule(function()
+            pcall(_G.nvim_bufferline)
+          end)
+        end
       end,
     })
 

@@ -16,8 +16,4 @@ return {
     skip_unbalanced = true,
     markdown = true,
   },
-  config = function(_, opts)
-    local pairs = require("mini.pairs")
-    pairs.setup(opts)
-  end,
 }

@@ -23,7 +23,8 @@ return {
         'yaml',
       }
 
-      TS.install(parsers):wait(300000)
+      -- 异步安装 parser，不阻塞启动
+      TS.install(parsers)
 
       -- 动态启用：只要有对应的 parser 就启用 treesitter
       vim.api.nvim_create_autocmd('FileType', {
@@ -40,18 +41,21 @@ return {
           local ok = pcall(vim.treesitter.get_parser, ev.buf, lang)
           if ok then
             vim.treesitter.start(ev.buf, lang)
+            -- Tree-sitter 折叠：按语法结构（函数/类/块）折叠，放在 FileType 里保证每个打开的文件都会生效
+            -- 官方：https://github.com/nvim-treesitter/nvim-treesitter#folds
+            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            vim.wo.foldmethod = "expr"
+            vim.wo.foldlevel = 99 -- 默认全部展开；0 为全部折叠
           end
         end,
       })
-
-      vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-      vim.wo[0][0].foldmethod = 'expr'
     end,
   },
 
   -- 顶部固定显示当前上下文（函数 / 类名等）
   {
-    'nvim-treesitter/nvim-treesitter-context',
+    "nvim-treesitter/nvim-treesitter-context",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {
       enable = true,
       max_lines = 0, -- 0 表示不限高度

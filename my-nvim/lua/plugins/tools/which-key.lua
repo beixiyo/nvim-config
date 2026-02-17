@@ -32,8 +32,5 @@ return {
     keys = {
       { "<leader>?", function() require("which-key").show({ global = false }) end, desc = "Buffer Keymaps" },
     },
-    config = function(_, opts)
-      require("which-key").setup(opts)
-    end,
   },
 }
