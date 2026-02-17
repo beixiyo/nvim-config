@@ -342,10 +342,10 @@ M.icons.keymaps = {
   git_branches = "󰘬 ",
   
   -- 窗口管理
-  window_left = "󰁍 ",
-  window_right = "󰁔 ",
-  window_up = "󰁑 ",
-  window_down = "󰁐 ",
+  arrow_left = "󰁍 ",
+  arrow_right = "󰁔 ",
+  arrow_up = "󰁑 ",
+  arrow_down = "󰁐 ",
   
   -- 编辑操作
   move_down = "󰁐 ",

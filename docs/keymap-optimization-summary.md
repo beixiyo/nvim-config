@@ -77,8 +77,8 @@ map("i", "jk", "<Esc>", { desc = icons.exit_insert .. "退出插入模式" })
 -- =======================
 -- 2. 窗口管理
 -- =======================
-map("n", "<C-h>", "<C-w>h", { desc = icons.window_left .. "焦点左窗口" })
-map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = icons.window_left .. "焦点左窗口" })
+map("n", "<C-h>", "<C-w>h", { desc = icons.arrow_left .. "焦点左窗口" })
+map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = icons.arrow_left .. "焦点左窗口" })
 
 -- =======================
 -- 4. 剪贴板
@@ -119,7 +119,7 @@ map("v", "<C-c>", '"+y', { desc = icons.copy .. "复制到系统剪贴板" })
 - 文件相关：`find_file`、`git_files`、`recent_files` 等
 - 搜索相关：`grep`、`grep_word`、`scope` 等
 - Git 相关：`git_status`、`git_stash`、`git_diff` 等
-- 窗口管理：`window_left`、`window_right`、`window_up`、`window_down`
+- 窗口管理：`arrow_left`、`arrow_right`、`arrow_up`、`arrow_down`
 - 编辑操作：`move_down`、`move_up`、`copy`
 - 导航：`prev`、`next`
 

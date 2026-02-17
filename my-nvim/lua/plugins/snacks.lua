@@ -23,13 +23,24 @@ return {
     notifier = { enabled = true },     -- 通知系统：统一的消息通知显示
     picker = {                         -- 选择器：模糊查找文件、文本等（替代 fzf-lua）
       enabled = true,
-      -- 调大 picker 窗口：默认 layout 约为 0.8x0.8，这里放大到接近全屏
-      -- 说明：layout.config 会在 preset 解析后被调用，可安全地微调最终布局尺寸
       layout = {
         config = function(layout)
-          layout.layout.width = 0.98
-          layout.layout.height = 0.98
-          layout.layout.min_width = 140
+          local box = layout.layout or {}
+
+          -- 认为这是侧边栏布局，不动它
+          if box.position == "left" then
+            box.min_width = 140
+            box.width = 0.16
+            layout.layout = box
+            return layout
+          end
+
+          -- 其它 picker（files / grep 等）放大到接近全屏
+          box.width = 0.98
+          box.height = 0.98
+          box.min_width = 140
+          layout.layout = box
+          return layout
         end,
       },
     },
@@ -78,6 +89,24 @@ return {
       },
     },
   },
+
+  config = function(_, opts)
+    local snacks = require("snacks")
+    snacks.setup(opts)
+    -- 让 Snacks 的路径颜色更亮一些
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        vim.api.nvim_set_hl(0, "SnacksPickerDir",         { fg = "#787878" })
+        vim.api.nvim_set_hl(0, "SnacksPickerPathHidden",  { fg = "#565f89" })
+        vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { fg = "#565f89" })
+
+        -- 或者方式 2：link 到你主题里比较清晰的高亮组
+        -- vim.api.nvim_set_hl(0, "SnacksPickerDir",         { link = "Directory" })
+        -- vim.api.nvim_set_hl(0, "SnacksPickerPathHidden",  { link = "Comment" })
+        -- vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { link = "Comment" })
+      end,
+    })
+  end,
 
   keys = {
     -- =======================
