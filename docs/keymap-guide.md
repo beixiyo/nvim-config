@@ -1,8 +1,5 @@
-# LazyVim/Vim 快捷键（Keymap）速查指南
+# NeoVim 快捷键（Keymap）速查指南
 
-本指南面向初学者，帮助你快速掌握 `vim.keymap.set()`/`LazyVim.safe_keymap_set()` 的常用参数、可选值以及写法示例。
-
-> **TL;DR**  
 > ```lua
 > vim.keymap.set({mode}, {lhs}, {rhs}, {opts})
 > ```
@@ -28,8 +25,6 @@
 | `{ "n", "v" }` 等   | 多模式表        | 数组形式可一次绑定多个模式               |
 | `""` / `nil`        | 默认为 `"n"`    | 如果缺省，则只在 Normal 模式生效         |
 
-> 小技巧：LazyVim 内部大量使用 `{ "n", "x" }` 来覆盖 normal 与 visual（选择）模式。
-
 ---
 
 ## 2. `lhs` —— 触发键
@@ -39,7 +34,7 @@
 - 支持 `<localleader>`（LazyVim 默认 `\`）
 - 可组合：`"<leader><tab>]"`、`"<C-w><C-q>"` 等
 
-> 若需要 `<Esc>` 作为触发，请写 `"<Esc>"` 或 `"<esc>"`。
+> 若需要 `<Esc>` 作为触发，请写 `"<Esc>"` 或 `"<esc>"`
 
 ---
 
@@ -49,6 +44,36 @@
 - 直接传入可执行的 Vim 命令串，如：`"<cmd>w<cr>"`、`":echo 'hi'<CR>"`、`"<C-w>h"`
 - 结尾务必加 `<CR>` 以执行命令
 - 也可以写纯按键序列，例如 `"` (用于复制)、`"o<esc>"`（在下方插入新行并退出）
+
+#### `<cmd>xxx<cr>` vs `:xxx<CR>` 的区别
+
+在 Neovim 中，执行命令有两种写法，它们有重要区别：
+
+**`<cmd>xxx<cr>` - Neovim 推荐方式**
+
+```lua
+vim.keymap.set("n", "C-s", "<cmd>w<cr>", { desc = "保存" })
+```
+
+**`:xxx<CR>` - 传统方式**
+
+```lua
+vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "保存" })
+```
+
+**对比表格：**
+
+| 特性 | `<cmd>xxx<cr>` | `:xxx<CR>` |
+|------|----------------|------------|
+| 命令历史 | ❌ 不显示 | ✅ 显示 |
+| 命令行事件 | ❌ 不触发 | ✅ 触发 |
+| 执行速度 | ✅ 更快 | ⚠️ 较慢 |
+| 插件拦截 | ✅ 不易被拦截 | ⚠️ 可能被拦截 |
+| 推荐度 | ✅ **推荐** | ⚠️ 传统方式 |
+
+**推荐做法：**
+- 优先使用 `<cmd>xxx<cr>` 方式
+- 只有在需要命令历史或触发事件时才使用 `:xxx<CR>`
 
 ### 3.2 函数形式
 - 传入 Lua 函数，便于编写复杂逻辑或调用插件 API
@@ -60,7 +85,7 @@ vim.keymap.set("n", "<leader>bd", function()
 end, { desc = "Delete Buffer" })
 ```
 
-> 函数模式下默认 `rhs` 不是表达式；若需返回字符串让 Neovim继续处理，需要 `expr = true`，见下文。
+> 函数模式下默认 `rhs` 不是表达式；若需返回字符串让 Neovim继续处理，需要 `expr = true`，见下文
 
 ---
 
@@ -79,12 +104,65 @@ end, { desc = "Delete Buffer" })
 | `ft`（LazyVim扩展） | string/string[] | nil | 仅在匹配的 filetype 下注册（`LazyVim.safe_keymap_set` 支持） |
 | 其它          | any      | -      | 传给 `vim.keymap.set` 的 `opts` 表会原样存放，可自行扩展 |
 
+#### 4.1 `remap` 和 `noremap` 详解（递归映射 vs 非递归映射）
+
+这是 Neovim 中最容易混淆的概念之一。让我们用具体例子来理解：
+
+**核心概念：**
+- **`noremap = true`**（默认）：**非递归映射** - `rhs` 中的按键**不会**再次触发映射
+- **`remap = true`**（或 `noremap = false`）：**递归映射** - `rhs` 中的按键**会**再次触发映射
+
+---
+
+**例子 1：理解递归映射的问题**
+
+假设你有以下配置：
+
+```lua
+-- 配置 1：将 h 映射为左移（这很危险！）
+vim.keymap.set("n", "h", "l", { noremap = false })  -- 递归映射
+
+-- 配置 2：将 <leader>h 映射为 h
+vim.keymap.set("n", "<leader>h", "h", { noremap = true })  -- 非递归映射
+```
+
+**问题：**
+- 当你按 `<leader>h` 时，它执行 `h`
+- 但 `h` 已经被映射为 `l`（左移变成了右移！）
+- 所以 `<leader>h` 实际上会执行 `l`（右移），而不是原来的 `h`（左移）
+
+**解决方案：使用 `noremap = true`**
+
+```lua
+-- 正确做法：使用非递归映射
+vim.keymap.set("n", "<leader>h", "h", { noremap = true })  -- 直接执行 h，不再触发映射
+```
+
+---
+
+**你的配置文件中的实际例子**
+
+```lua
+-- 你的配置：Alt + Left/Right 跳转历史
+map("n", "<A-Left>", "<C-o>", { desc = "跳转到上一个光标位置", remap = true })
+```
+
+**为什么这里用 `remap = true`？**
+
+- `<C-o>` 是 Neovim 的原生按键（跳转到上一个位置）
+- 使用 `remap = true` 意味着：如果 `<C-o>` 被其他插件或配置映射了，会触发那个映射
+- 使用 `noremap = true` 意味着：直接执行原始的 `<C-o>`，忽略所有映射
+
+**推荐做法：**
+- 如果 `<C-o>` 是原生功能，通常用 `noremap = true`（更安全）
+- 如果希望 `<C-o>` 能触发其他映射，用 `remap = true`
+
 > **LazyVim 专属加强**  
 > `LazyVim.safe_keymap_set` 会：  
 > - 自动处理 `desc`（供 which-key 展示）  
 > - 避免重复绑定 （比如多个模块定义同样的键）  
 > - 支持 `ft` 条件加载  
-> 在自己配置文件中推荐直接使用 `vim.keymap.set`，确保你能感知所有注册的映射。
+> 在自己配置文件中推荐直接使用 `vim.keymap.set`，确保你能感知所有注册的映射
 
 ---
 
@@ -140,39 +218,3 @@ vim.api.nvim_create_autocmd("FileType", {
 ```
 - 通过 `buffer = event.buf` 让快捷键只在该 buffer 生效  
 - 适用于插件窗口或临时 buffer
-
----
-
-## 6. 常见问题（FAQ）
-
-1. **为什么按键不生效？**  
-   - 是否被其它映射覆盖（`:verbose map {lhs}` 检查）  
-   - 所在模式是否正确  
-   - `<leader>`、`<localleader>` 是否与你期望一致（在 `options.lua` 中配置）
-   - **有的终端不支持** Ctrl + Alt 系列，可以输入 `:echo getcharstr()` 后按下快捷键，看是否有捕捉到按键
-
-2. **`desc` 有什么用？**  
-   - which-key、`:map`、LazyVim 的通知栏都会展示描述，帮助记忆  
-   - 建议中英文都写上，团队协作更易懂
-
-3. **想要能重复触发原生映射怎么办？**  
-   - 设置 `remap = true`（等价于 `noremap = false`）  
-   - 例如希望 `<leader>h` 能调用到默认 `h` 操作
-
-4. **如何删除已有映射？**  
-   ```lua
-   vim.keymap.del("n", "<leader>bd")
-   -- LazyVim 提供 util: LazyVim.keymap.del(...)
-   ```
-
----
-
-## 7. 推荐学习顺序
-
-1. 先熟悉 `mode` 与 `<leader>` / `<localleader>` 设置  
-2. 学会通过 `desc` 描述含义，便于 which-key 展示  
-3. 有需求时再逐步引入 `expr`、`buffer`、`nowait` 等高级选项  
-4. 参考 `lua/lazyvim/config/keymaps.lua`，大量场景示例已经写好中文注释
-
-祝你在 LazyVim 的快捷键世界玩得开心 🎉
-
