@@ -125,6 +125,55 @@ return {
         -- vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { link = "Comment" })
       end,
     })
+
+    -- 当所有「真正的文件 buffer」关闭后，自动回到 Snacks Dashboard
+    -- 判定标准：buftype == "" 且有文件名（排除 [No Name] / 终端 / quickfix 等）
+    -- 这样无论是通过 bufferline 的关闭按钮、:bd，还是 <leader>ba (Snacks.bufdelete.all)，都能回到首页
+    vim.api.nvim_create_autocmd("BufDelete", {
+      callback = function(args)
+        -- 如果关闭的是 dashboard 自己，直接返回，避免死循环
+        local ok_ft, ft = pcall(function()
+          return vim.bo[args.buf].filetype
+        end)
+        if ok_ft and ft == "snacks_dashboard" then
+          return
+        end
+
+        -- 等 buffer 真正被删除后再检查剩余 buffer
+        vim.schedule(function()
+          local infos = vim.fn.getbufinfo({ buflisted = 1 })
+
+          local has_real_file = false
+          for _, info in ipairs(infos) do
+            local bufnr = info.bufnr
+            local name = info.name or ""
+
+            -- 保护性读取，避免 invalid bufnr 报错
+            local ok, bt = pcall(function()
+              return vim.bo[bufnr].buftype
+            end)
+            local ok2, ft2 = pcall(function()
+              return vim.bo[bufnr].filetype
+            end)
+
+            if ok and ok2 then
+              -- 忽略 dashboard、自身的 [No Name]、终端等特殊 buffer
+              if ft2 ~= "snacks_dashboard" and bt == "" and name ~= "" then
+                has_real_file = true
+                break
+              end
+            end
+          end
+
+          -- 如果已经没有任何真正的文件 buffer，则打开 dashboard
+          if not has_real_file then
+            pcall(function()
+              require("snacks").dashboard.open()
+            end)
+          end
+        end)
+      end,
+    })
   end,
 
   keys = {
