@@ -86,7 +86,7 @@ M.icons = {
     -- 文件相关
     find_file = "󰈔",
     git_files = "󰊢",
-    recent_files = "󰄉",
+    recent_files = "󰋚",
     config_files = "󰒓",
     buffers = "󰈙",
     explorer = "󰉓",
@@ -119,20 +119,20 @@ M.icons = {
     next = "󰁔",
     -- 其他
     terminal = "󰆍",
-    quit = "󰩟",
-    save = "󰄉",
+    quit = "",
+    save = "󰆓",
     exit_insert = "󰩟",
     -- Neovim 内部功能
-    commands = "󰆍",
-    command_history = "󰄉",
-    registers = "󰆍",
-    marks = "󰁴",
-    jumps = "󰁍",
+    commands = "󰘳",
+    command_history = "󰋚",
+    registers = "󰱼",
+    marks = "󰆤",
+    jumps = "󰘈",
     keymaps = "󰌌",
     todo_comments = "󰄬",
     -- Quickfix
-    quickfix = "󰈔",
-    location_list = "󰈔",
+    quickfix = "󰈸",
+    location_list = "󰉁",
     -- 消息
     message = "󰍩",
   },

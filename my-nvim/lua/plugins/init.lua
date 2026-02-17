@@ -13,12 +13,18 @@ return {
   -- - `bigfile` / `input` / `quickfile`
   { import = "plugins.snacks" },
 
+  -- Git 行内标记 / hunk 操作
+  { import = "plugins.code.gitsigns" },
+  -- 补全
   { import = "plugins.code.blink" },
   { import = "plugins.code.lsp" },
   { import = "plugins.code.mini-pairs" },
+  -- 渲染 Markdown
   { import = "plugins.code.render-markdown" },
+  -- 语法树
   { import = "plugins.code.treesitter" },
 
+  -- 跳转
   { import = "plugins.tools.flash" },
   { import = "plugins.tools.multicursor" },
   { import = "plugins.tools.session" },

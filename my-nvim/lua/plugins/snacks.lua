@@ -132,12 +132,18 @@ return {
 
     -- =======================
     -- 4. Git（<leader>g 前缀）
+    -- 约定：<leader>g{大写首字母}，语义更直观，避免 gb/gd/gl 这类难记组合
+    --   gs  = status（沿用）
+    --   gS  = Stash
+    --   gD  = Diff
+    --   gL  = Log
+    --   gB  = Branches
     -- =======================
     { "<leader>gs", function() Snacks.picker.git_status() end, desc = icons.git_status .. " " .. "Git 状态" },
     { "<leader>gS", function() Snacks.picker.git_stash() end, desc = icons.git_stash .. " " .. "Git 暂存" },
-    { "<leader>gd", function() Snacks.picker.git_diff() end, desc = icons.git_diff .. " " .. "Git 差异" },
-    { "<leader>gl", function() Snacks.picker.git_log() end, desc = icons.git_log .. " " .. "Git 日志" },
-    { "<leader>gb", function() Snacks.picker.git_branches() end, desc = icons.git_branches .. " " .. "Git 分支" },
+    { "<leader>gD", function() Snacks.picker.git_diff() end, desc = icons.git_diff .. " " .. "Git 差异" },
+    { "<leader>gL", function() Snacks.picker.git_log() end, desc = icons.git_log .. " " .. "Git 日志" },
+    { "<leader>gB", function() Snacks.picker.git_branches() end, desc = icons.git_branches .. " " .. "Git 分支" },
 
     -- =======================
     -- 5. Neovim 内部功能（<leader>f 前缀，大写字母）
