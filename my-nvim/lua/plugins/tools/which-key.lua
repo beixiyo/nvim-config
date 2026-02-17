@@ -21,14 +21,14 @@ return {
         {
           mode = { "n", "x" },
           -- leader 前缀分组
-          { "<leader>c", group = "code", icon = { icon = icons.commands, color = "green" } },
+          { "<leader>c", group = "code", icon = { icon = icons.code, color = "green" } },
           { "<leader>b", group = "buffers", icon = { icon = icons.buffers, color = "blue" } },
           { "<leader>f", group = "file/find", icon = { icon = icons.find_file, color = "blue" } },
           { "<leader>g", group = "git", icon = { icon = icons.git_status, color = "red" } },
           { "<leader>s", group = "search", icon = { icon = icons.grep, color = "cyan" } },
           { "<leader>q", group = "quit/session", icon = { icon = icons.save, color = "azure" } },
           { "<leader>x", group = "diagnostics/quickfix", icon = { icon = icons.diagnostics, color = "orange" } },
-          { "<leader>m", group = "message", icon = { icon = icons.message, color = "green" } },
+          { "<leader>m", group = "message | markdown", icon = { icon = icons.message, color = "green" } },
           { "<leader>l", group = "lsp", icon = { icon = icons.scope, color = "cyan" } },
           { "<leader>w", group = "window/layout", icon = { icon = icons.window, color = "purple" } },
 

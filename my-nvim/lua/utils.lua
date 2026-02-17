@@ -13,6 +13,7 @@ M.icons = {
   dots = "󰇘",
   clock = "",
   lsp = "",
+  code = "",
 
   -- Dashboard
   dashboard_find_file = "",
@@ -83,11 +84,14 @@ M.icons = {
   -- 导航
   prev = "󰁍",
   next = "󰁔",
+
   -- 其他
   terminal = "󰆍",
   quit = "",
   save = "󰆓",
   exit_insert = "󰩟",
+  duck = "󰇥",
+
   -- Neovim 内部功能
   commands = "󰘳",
   command_history = "󰋚",
@@ -96,10 +100,12 @@ M.icons = {
   jumps = "󰘈",
   keymaps = "󰌌",
   todo_comments = "󰄬",
+
   -- Quickfix
   quickfix = "󰈸",
   location_list = "󰉁",
   -- 消息
+
   message = "󰍩",
 
   -- LSP completion kind 图标

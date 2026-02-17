@@ -29,9 +29,11 @@
     "/root/.local/share/nvim/my-nvim/lazy/nvim-treesitter-context/lua",
     "/root/.local/share/nvim/my-nvim/lazy/nvim-treesitter/lua",
     "/root/.local/share/nvim/my-nvim/lazy/nvim-web-devicons/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/plenary.nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/render-markdown.nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/snacks.nvim/lua",
-    "/root/.local/share/nvim/my-nvim/lazy/which-key.nvim/lua"
+    "/root/.local/share/nvim/my-nvim/lazy/which-key.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/yazi.nvim/lua"
   ],
   "_pluginTypes": [
     {
@@ -80,6 +82,13 @@
         "snacks.dashboard.Item[]"
       ],
       "file": "snacks.lua"
+    },
+    {
+      "types": [
+        "LazySpec",
+        "YaziConfig | {}"
+      ],
+      "file": "tools/yazi.lua"
     },
     {
       "module": "flash",

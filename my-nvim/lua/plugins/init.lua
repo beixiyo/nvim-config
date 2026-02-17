@@ -29,6 +29,7 @@ return {
   { import = "plugins.tools.multicursor" },
   { import = "plugins.tools.session" },
   { import = "plugins.tools.which-key" },
+  { import = "plugins.tools.yazi" },
 
   { import = "plugins.ui.bufferline" },
   { import = "plugins.ui.indent" },
