@@ -6,4 +6,6 @@ vim.opt.rtp:prepend(vim.fn.stdpath("config"))
 
 require("config.options")
 require("config.keymaps")
+require("config.autocmd")
+require("config.clipboard")
 require("config.lazy")
