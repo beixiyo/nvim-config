@@ -1,0 +1,34 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "diagnostics.globals": [
+    "vim"
+  ],
+  "workspace.library": [
+    "$VIMRUNTIME",
+    "$XDG_DATA_HOME/nvim/my-nvim/lazy",
+    "${3rd}/luv/library"
+  ],
+  "Lua.workspace.library": [
+    "/root/.local/share/nvim/my-nvim/lazy/auto-session/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/blink.cmp/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/bufferline.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/flash.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/indent-blankline.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/lazy.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/lualine.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/mason-lspconfig.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/mason.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/mini.pairs/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/noice.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/nui.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/nvim-lspconfig/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/nvim-navic/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/nvim-notify/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/nvim-treesitter-context/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/nvim-treesitter/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/nvim-web-devicons/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/render-markdown.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/snacks.nvim/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/which-key.nvim/lua"
+  ]
+}

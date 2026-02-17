@@ -41,3 +41,6 @@ opt.splitbelow = true
 
 -- 按键超时（ms）
 opt.timeoutlen = 300
+
+-- 会话保存/恢复内容（auto-session 依赖此项）
+opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"

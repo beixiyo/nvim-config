@@ -54,7 +54,7 @@ return {
           { icon = dashboard.find_text,    key = "g", desc = "Find Text",       action = ":lua Snacks.dashboard.pick('live_grep')" },
           { icon = dashboard.recent_files, key = "r", desc = "Recent Files",    action = ":lua Snacks.dashboard.pick('oldfiles')" },
           { icon = dashboard.config,       key = "c", desc = "Config",          action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-          { icon = dashboard.session,      key = "s", desc = "Restore Session", section = "session" },
+          { icon = dashboard.session,      key = "s", desc = "Restore Session", action = ":AutoSession search" },
           { icon = dashboard.lazy,         key = "l", desc = "Lazy",            action = ":Lazy" },
           { icon = dashboard.quit,         key = "q", desc = "Quit",            action = ":qa" },
         },
