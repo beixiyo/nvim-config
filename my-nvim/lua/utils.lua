@@ -4,6 +4,7 @@ M.icons = {
   misc = {
     dots = "󰇘",
     clock = "",
+    lsp = "",
   },
   dashboard = {
     find_file = "",
@@ -26,6 +27,7 @@ M.icons = {
     BreakpointCondition = "",
     BreakpointRejected  = { "", "DiagnosticError" },
     LogPoint            = ".>",
+    status              = "",
   },
   diagnostics = {
     Error = "",

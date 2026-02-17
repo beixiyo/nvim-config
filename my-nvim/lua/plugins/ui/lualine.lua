@@ -30,6 +30,95 @@ return {
     vim.o.laststatus = vim.g.lualine_laststatus
     local icons = utils.icons
 
+    -- LSP 分析/进度状态（不依赖额外插件）
+    -- 说明：
+    -- - “加载中/进度”依赖 LSP 服务器是否发送 `$/progress`，很多服务器不会发，所以经常为空
+    -- - 因此这里做了回退：没 progress 时显示当前 buffer 已挂载的 LSP 客户端（代表已加载）
+    local lsp_hidden_fts = {
+      -- 常见配置/声明式文件：不展示 LSP 状态（避免 NoLSP 干扰）
+      json = true,
+      jsonc = true,
+      yaml = true,
+      yml = true,
+      toml = true,
+      ini = true,
+      dosini = true,
+      conf = true,
+      config = true,
+      gitconfig = true,
+      gitignore = true,
+      gitattributes = true,
+      sshconfig = true,
+      properties = true,
+      dotenv = true,
+    }
+
+    local function lsp_should_show()
+      -- 非普通文件缓冲区（nofile/terminal/help/prompt/quickfix 等）不显示
+      if vim.bo.buftype ~= "" then
+        return false
+      end
+
+      -- 没有文件/没有 filetype（例如启动后的空白 buffer）不显示
+      if vim.api.nvim_buf_get_name(0) == "" and (vim.bo.filetype == nil or vim.bo.filetype == "") then
+        return false
+      end
+
+      -- 配置型 filetype 不显示
+      return not lsp_hidden_fts[vim.bo.filetype]
+    end
+
+    local function lsp_progress()
+      local ok, msgs = pcall(function()
+        return vim.lsp.util.get_progress_messages()
+      end)
+      if ok and type(msgs) == "table" and #msgs > 0 then
+        local m = msgs[1] or {}
+        local parts = {}
+        local name = m.name or m.title or ""
+        local message = m.message or ""
+        local percentage = m.percentage and (tostring(m.percentage) .. "%%") or ""
+        if name ~= "" then table.insert(parts, name) end
+        if message ~= "" then table.insert(parts, message) end
+        if percentage ~= "" then table.insert(parts, percentage) end
+        return table.concat(parts, " ")
+      end
+      if type(vim.lsp.status) == "function" then
+        return vim.lsp.status() or ""
+      end
+      return ""
+    end
+
+    local function lsp_clients()
+      local clients = {}
+      if vim.lsp.get_clients then
+        clients = vim.lsp.get_clients({ bufnr = 0 })
+      elseif vim.lsp.get_active_clients then
+        clients = vim.lsp.get_active_clients({ bufnr = 0 })
+      end
+
+      if type(clients) ~= "table" or vim.tbl_isempty(clients) then
+        return ""
+      end
+
+      local names = {}
+      for _, c in ipairs(clients) do
+        if c and c.name and c.name ~= "" and c.name ~= "copilot" then
+          table.insert(names, c.name)
+        end
+      end
+      if #names == 0 then
+        return ""
+      end
+
+      table.sort(names)
+      local max = 2
+      if #names > max then
+        return table.concat({ names[1], names[2] }, ",") .. " +" .. tostring(#names - max)
+      end
+      return table.concat(names, ",")
+    end
+
     return {
       options = {
         theme = "auto",
@@ -40,26 +129,58 @@ return {
         section_separators = { left = "\u{e0b4}", right = "\u{e0b6}" },
       },
       sections = {
+        -- 左侧：当前模式
         lualine_a = { "mode" },
+        -- 左侧：Git 分支
         lualine_b = { "branch" },
 
         lualine_c = {
+          -- 项目根目录（utils.lualine.root_dir）
           utils.lualine.root_dir(),
           {
+            -- LSP 诊断：错误/警告/信息/提示
             "diagnostics",
             symbols = {
-              error = icons.diagnostics.Error,
-              warn = icons.diagnostics.Warn,
-              info = icons.diagnostics.Info,
-              hint = icons.diagnostics.Hint,
+              error = icons.diagnostics.Error .. " ",
+              warn = icons.diagnostics.Warn .. " ",
+              info = icons.diagnostics.Info .. " ",
+              hint = icons.diagnostics.Hint .. " ",
             },
           },
+          -- 当前文件类型图标（仅图标）
           { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          -- 友好路径展示（utils.lualine.pretty_path）
           { utils.lualine.pretty_path() },
         },
 
         lualine_x = {
+          -- 性能 profiler 状态（Snacks）
           Snacks.profiler.status(),
+          -- LSP 分析/进度状态：例如 indexing / diagnostics / formatting 等（若无则不显示）
+          {
+            function()
+              if not lsp_should_show() then
+                return ""
+              end
+
+              local p = lsp_progress()
+              if p ~= "" then
+                return icons.misc.lsp .. " " .. p
+              end
+
+              local c = lsp_clients()
+              if c ~= "" then
+                return icons.misc.lsp .. " " .. c
+              end
+
+              return icons.misc.lsp .. " NoLSP"
+            end,
+            cond = function()
+              return lsp_should_show()
+            end,
+            color = function() return { fg = Snacks.util.color("Special") } end,
+          },
+          -- Noice：命令行/模式提示
           {
             function() return require("noice").api.status.command.get() end,
             cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
@@ -71,21 +192,24 @@ return {
             color = function() return { fg = Snacks.util.color("Constant") } end,
           },
           {
-            function() return "  " .. require("dap").status() end,
+            -- DAP 调试状态
+            function() return icons.dap.status .. " " .. require("dap").status() end,
             cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
             color = function() return { fg = Snacks.util.color("Debug") } end,
           },
           {
+            -- Lazy 更新提示
             require("lazy.status").updates,
             cond = require("lazy.status").has_updates,
             color = function() return { fg = Snacks.util.color("Special") } end,
           },
           {
+            -- Git diff 统计（来自 gitsigns buffer 状态）
             "diff",
             symbols = {
-              added = icons.git.added,
-              modified = icons.git.modified,
-              removed = icons.git.removed,
+              added = icons.git.added .. " ",
+              modified = icons.git.modified .. " ",
+              removed = icons.git.removed .. " ",
             },
             source = function()
               local gitsigns = vim.b.gitsigns_status_dict
@@ -100,12 +224,14 @@ return {
           },
         },
         lualine_y = {
+          -- 进度 + 光标位置
           { "progress", separator = " ", padding = { left = 1, right = 0 } },
           { "location", padding = { left = 0, right = 1 } },
         },
         lualine_z = {
+          -- 右侧时钟
           function()
-            return icons.misc.clock .. os.date("%R")
+            return icons.misc.clock .. " " .. os.date("%R")
           end,
         },
       },
