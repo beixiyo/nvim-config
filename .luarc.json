@@ -20,6 +20,7 @@
     "/root/.local/share/nvim/my-nvim/lazy/mason-lspconfig.nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/mason.nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/mini.pairs/lua",
+    "/root/.local/share/nvim/my-nvim/lazy/multicursor.nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/noice.nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/nui.nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/nvim-lspconfig/lua",
@@ -34,20 +35,6 @@
   ],
   "_pluginTypes": [
     {
-      "module": "mini.pairs",
-      "types": [
-        "mini.pairs.Options"
-      ],
-      "file": "code/mini-pairs.lua"
-    },
-    {
-      "module": "nvim-treesitter-context",
-      "types": [
-        "nvim_treesitter_context.Config"
-      ],
-      "file": "code/treesitter.lua"
-    },
-    {
       "module": "blink.cmp",
       "types": [
         "blink.cmp.Config"
@@ -60,18 +47,6 @@
         "render.md.UserConfig"
       ],
       "file": "code/render-markdown.lua"
-    },
-    {
-      "module": "mason-lspconfig",
-      "types": [
-        "MasonLspconfig.SetupOpts"
-      ],
-      "file": "code/lsp.lua"
-    },
-    {
-      "module": "lualine",
-      "types": [],
-      "file": "ui/lualine.lua"
     },
     {
       "module": "tokyonight",
@@ -119,13 +94,6 @@
         "AutoSession.Config"
       ],
       "file": "tools/session.lua"
-    },
-    {
-      "module": "which-key",
-      "types": [
-        "WhichKey.Config"
-      ],
-      "file": "tools/which-key.lua"
     }
   ]
 }

@@ -20,6 +20,7 @@ return {
   { import = "plugins.code.treesitter" },
 
   { import = "plugins.tools.flash" },
+  { import = "plugins.tools.multicursor" },
   { import = "plugins.tools.session" },
   { import = "plugins.tools.which-key" },
 

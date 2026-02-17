@@ -69,24 +69,42 @@
 | **akinsho/toggleterm.nvim** | `Snacks.terminal` | 键位 `Ctrl+\` 或 `<leader>ft` 打开/切换浮动或分屏终端。 |
 | （buffer 关闭逻辑） | `Snacks.bufdelete` | bufferline.nvim 的关闭/右键关闭已依赖 `Snacks.bufdelete`，不破坏布局。 |
 | （通知样式） | `Snacks.notifier` | 启用后替代 `vim.notify`，与 Noice 等共用。 |
+| **neo-tree** | `Snacks.explorer` | 文件树：`<leader>e` 打开/切换，键位见 `plugins/snacks.lua`。 |
 
-**未替换**（继续使用原插件）：neo-tree（文件树）、noice（cmdline/消息 UI）、which-key、flash、blink.cmp、render-markdown、treesitter、theme、lualine、bufferline（仅用 Snacks.bufdelete）。
+**未替换**（继续使用原插件）：noice（cmdline/消息 UI）、which-key、flash、blink.cmp、render-markdown、treesitter、theme、lualine、bufferline（仅用 Snacks.bufdelete）。
 
 ---
 
-## 六、当前状态与下一步（含 LSP 规划）
+## 六、当前状态与下一步
 
-- **已完成**：骨架 + lazy 引导 + 基础 options/keymaps。**窗口焦点**：`Ctrl-h`/`Ctrl-j`/`Ctrl-k`/`Ctrl-l` 在分屏与终端间切换（`lua/config/keymaps.lua`）。**文件树**：neo-tree.nvim，`<leader>e` / `<leader>ge` / `<leader>be`。**Markdown 渲染**：render-markdown.nvim，`<leader>mr` / `<leader>mp`。**欢迎页 / 找文件 / 搜内容 / 终端**：已统一为 Snacks（dashboard、picker、terminal），见上一节；原 alpha-nvim、fzf-lua、toggleterm 已移除。**Buffer 标签**：bufferline.nvim，关闭用 `Snacks.bufdelete`。
-- **待做（LSP 相关）**：
-  - 在 `lua/plugins/lsp/` 或 `lua/plugins/code/` 下新增 LSP spec（如 `nvim-lspconfig` + `mason.nvim` + `mason-lspconfig.nvim`），独立于 LazyVim。
-  - 为常用语言（至少：Lua、TypeScript/JavaScript、Python、Go）配置基础 server、根目录探测、诊断样式。
-  - 使用 Snacks 或内置 `vim.diagnostic` 的 minimal UI，后续再考虑 noice 等增强。
-  - 在 `lua/config/keymaps.lua` 中补充 LSP 通用键位（如：`gd` 跳转定义、`gr` 引用、`K` 悬浮文档、`<leader>rn` 重命名、`<leader>ca` code action 等）。
-  - 在 `docs/` 中新增 LSP 专门说明，记录「安装哪些 language server、如何与 mason 集成、常用快捷键」。
+- **已完成**：骨架 + lazy 引导 + 基础 options/keymaps。**窗口焦点**：`Ctrl-h`/`Ctrl-j`/`Ctrl-k`/`Ctrl-l` 在分屏与终端间切换（`lua/config/keymaps.lua`）。**文件树**：Snacks.explorer，`<leader>e` 等（见第五节）。**Markdown 渲染**：render-markdown.nvim，`<leader>mr` / `<leader>mp`。**欢迎页 / 找文件 / 搜内容 / 终端**：已统一为 Snacks（dashboard、picker、terminal）；原 alpha-nvim、fzf-lua、toggleterm、neo-tree 已移除。**Buffer 标签**：bufferline.nvim，关闭用 `Snacks.bufdelete`。**LSP**：`lua/plugins/code/lsp.lua` 已实现 mason.nvim + mason-lspconfig + nvim-lspconfig，LSP 键位（gd/gr/K、`<leader>ca`/`<leader>cr`/`<leader>cf`、诊断/符号/调用层级等）在 LspAttach 中注册，并与 Snacks.picker 集成。**会话**：auto-session（`<leader>qs`/`ql`/`qS`/`qd`）。**补全与片段**：blink.cmp + friendly-snippets。
+- **待做 / 可选**：
+  - 在 `lua/plugins/code/lsp.lua` 的 `ensure_installed` 中按需配置各语言 server（如 lua_ls、ts/js、pyright、gopls），并视需调整根目录探测、诊断样式。
+  - 其他功能按需补齐（见本文档末尾「可能缺失的功能」）；文档方面可维护 [docs/lsp.md](lsp.md)、[docs/my-nvim-structure.md](my-nvim-structure.md)。
 
 ---
 
 ## 七、文档维护
 
 - 本文档（`target.md`）随改造推进可更新「当前状态与下一步」、细化各步骤的子任务或补充「已完成项」。
-- 与 my-nvim 相关的说明（如目录结构、加载顺序）可放在 `docs/` 下单独文件，并在本目标中做链接或引用。
+- 与 my-nvim 相关的说明已放在 `docs/` 下：
+  - [lsp.md](lsp.md)：LSP 集成说明（mason、language server、常用快捷键）。
+  - [my-nvim-structure.md](my-nvim-structure.md)：my-nvim 加载顺序与目录结构。
+  - 主配置的加载顺序见 [loading-order.md](loading-order.md)（与 my-nvim 分离）。
+
+---
+
+## 八、可能缺失的功能（按需补齐）
+
+以下为常见能力对照，当前 my-nvim **未**单独配置或仅预留了 UI 的，可按需添加：
+
+| 功能 | 说明 | 当前状态 |
+|------|------|----------|
+| **Git 行内** | 行内 diff 标记、hunk 暂存、blame 等 | 未装 gitsigns.nvim；lualine 已预留 gitsigns 状态显示，安装后即可用。 |
+| **调试** | 断点、单步、变量查看（DAP） | 未装 nvim-dap；lualine 已预留 dap 状态显示。 |
+| **注释** | `gc` / `gcc` 快速注释 | 未装 comment.nvim 或 mini.comment，可按需添加。 |
+| **测试** | 运行/跳转测试（neotest 等） | 未配置。 |
+| **独立格式化** | 非 LSP 的格式化（如 Prettier、Stylus） | 当前仅用 LSP `buf.format`；若需统一多工具可加 conform.nvim 等。 |
+| **多光标** | 批量编辑 | 未配置；Snacks.words 仅高亮同词，非多光标。可选插件对比见 [multi-cursor-plugins.md](multi-cursor-plugins.md)。 |
+
+以上均为**可选**，视个人工作流决定是否补齐。
