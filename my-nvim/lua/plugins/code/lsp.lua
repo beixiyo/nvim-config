@@ -92,28 +92,47 @@ return {
 
         -- Code 组快捷键（<leader>c 前缀，属于 "code" 组）
         if client and client.supports_method("textDocument/codeAction") then
-          map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = icons.commands .. " " .. "代码操作", buffer = event.buf })
-          map("x", "<leader>ca", vim.lsp.buf.code_action, { desc = icons.commands .. " " .. "代码操作", buffer = event.buf })
+          map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, { desc = icons.commands .. " " .. "自动修复", buffer = event.buf })
         end
+
         if client and client.supports_method("textDocument/rename") then
           map("n", "<leader>cr", vim.lsp.buf.rename, { desc = icons.commands .. " " .. "重命名", buffer = event.buf })
         end
+
         if client and (client.supports_method("textDocument/formatting") or client.supports_method("textDocument/rangeFormatting")) then
           map("n", "<leader>cf", function()
             vim.lsp.buf.format({ async = true })
           end, { desc = icons.commands .. " " .. "格式化", buffer = event.buf })
+
           map("x", "<leader>cf", function()
             vim.lsp.buf.format({ async = true, range = { ["start"] = vim.api.nvim_buf_get_mark(0, "<"), ["end"] = vim.api.nvim_buf_get_mark(0, ">") } })
           end, { desc = icons.commands .. " " .. "格式化选中区域", buffer = event.buf })
         end
 
-        -- 诊断相关（<leader>x 前缀，属于 "diagnostics/quickfix" 组）
+        -- 诊断 & Quickfix / Location（<leader>x 前缀，属于 "diagnostics/quickfix" 组）
+        -- 跳转上/下一个诊断（保留原始行为）
         map("n", "[d", vim.diagnostic.goto_prev, { desc = icons.quickfix .. " " .. "上一个诊断", buffer = event.buf })
         map("n", "]d", vim.diagnostic.goto_next, { desc = icons.quickfix .. " " .. "下一个诊断", buffer = event.buf })
+
+        -- 当前光标处诊断浮窗
         map("n", "<leader>xd", vim.diagnostic.open_float, { desc = icons.quickfix .. " " .. "显示诊断信息", buffer = event.buf })
+
+        -- Snacks 诊断视图：所有 / 当前缓冲区
         map("n", "<leader>xx", function() Snacks.picker.diagnostics() end, { desc = icons.quickfix .. " " .. "所有诊断", buffer = event.buf })
         map("n", "<leader>xX", function() Snacks.picker.diagnostics_buffer() end, { desc = icons.quickfix .. " " .. "当前缓冲区诊断", buffer = event.buf })
-        map("n", "<leader>xl", vim.diagnostic.setloclist, { desc = icons.location_list .. " " .. "诊断列表", buffer = event.buf })
+
+        -- Quickfix：把当前所有诊断写入 quickfix，再用 Snacks 方式浏览
+        map("n", "<leader>xq", function()
+          vim.diagnostic.setqflist({ open = false })
+          Snacks.picker.qflist()
+        end, { desc = icons.quickfix .. " " .. "诊断 Quickfix", buffer = event.buf })
+
+        -- Location List：把当前 buffer 诊断写入 loclist，再用 Snacks 方式浏览
+        map("n", "<leader>xl", function()
+          vim.diagnostic.setloclist({ open = false })
+          Snacks.picker.loclist()
+        end, { desc = icons.location_list .. " " .. "诊断 Loclist", buffer = event.buf })
+
         -- LSP 符号搜索
         map("n", "<leader>ls", function() Snacks.picker.lsp_symbols() end, { desc = icons.scope .. " " .. "文档符号", buffer = event.buf })
         map("n", "<leader>lS", function() Snacks.picker.lsp_workspace_symbols() end, { desc = icons.scope .. " " .. "工作区符号", buffer = event.buf })

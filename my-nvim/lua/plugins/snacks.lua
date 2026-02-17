@@ -21,7 +21,18 @@ return {
     indent = { enabled = false },      -- 缩进线：显示缩进指示线（已禁用，使用其他插件）
     input = { enabled = true },        -- 输入框：提供现代化的输入对话框
     notifier = { enabled = true },     -- 通知系统：统一的消息通知显示
-    picker = { enabled = true },       -- 选择器：模糊查找文件、文本等（替代 fzf-lua）
+    picker = {                         -- 选择器：模糊查找文件、文本等（替代 fzf-lua）
+      enabled = true,
+      -- 调大 picker 窗口：默认 layout 约为 0.8x0.8，这里放大到接近全屏
+      -- 说明：layout.config 会在 preset 解析后被调用，可安全地微调最终布局尺寸
+      layout = {
+        config = function(layout)
+          layout.layout.width = 0.98
+          layout.layout.height = 0.98
+          layout.layout.min_width = 140
+        end,
+      },
+    },
     quickfile = { enabled = true },    -- 快速文件：快速打开最近使用的文件
     scope = { enabled = true },        -- 作用域检测：检测代码作用域，支持跳转等功能
     scroll = { enabled = true },       -- 平滑滚动：提供平滑的滚动体验
@@ -111,13 +122,7 @@ return {
     { "<leader>fT", function() Snacks.picker.todo_comments() end, desc = icons.todo_comments .. " " .. "待办注释" },
 
     -- =======================
-    -- 6. Quickfix/Location（<leader>x 前缀）
-    -- =======================
-    { "<leader>xq", function() Snacks.picker.qflist() end, desc = icons.quickfix .. " " .. "Quickfix 列表" },
-    { "<leader>xl", function() Snacks.picker.loclist() end, desc = icons.location_list .. " " .. "位置列表" },
-
-    -- =======================
-    -- 7. 终端
+    -- 6. 终端
     -- =======================
     { "<C-\\>", function() Snacks.terminal() end, desc = icons.terminal .. " " .. "切换终端", mode = { "n", "t" } },
   },
