@@ -2,7 +2,7 @@
 -- Noice 命令行/消息 UI
 -- ================================
 -- 现代化 cmdline、消息与补全浮层。:echo "发送测试消息"
-
+---@module "noice"
 return {
   {
     "folke/noice.nvim",
@@ -11,6 +11,7 @@ return {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     },
+    ---@type NoiceConfig
     opts = {
       -- LSP：用 Noice 的 Markdown 渲染替代默认，hover/签名等文档更美观
       lsp = {

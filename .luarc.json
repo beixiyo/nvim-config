@@ -9,6 +9,7 @@
     "${3rd}/luv/library"
   ],
   "Lua.workspace.library": [
+    "/root/.config/nvim/my-nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/auto-session/lua",
     "/root/.local/share/nvim/my-nvim/lazy/blink.cmp/lua",
     "/root/.local/share/nvim/my-nvim/lazy/bufferline.nvim/lua",
@@ -30,5 +31,101 @@
     "/root/.local/share/nvim/my-nvim/lazy/render-markdown.nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/snacks.nvim/lua",
     "/root/.local/share/nvim/my-nvim/lazy/which-key.nvim/lua"
+  ],
+  "_pluginTypes": [
+    {
+      "module": "mini.pairs",
+      "types": [
+        "mini.pairs.Options"
+      ],
+      "file": "code/mini-pairs.lua"
+    },
+    {
+      "module": "nvim-treesitter-context",
+      "types": [
+        "nvim_treesitter_context.Config"
+      ],
+      "file": "code/treesitter.lua"
+    },
+    {
+      "module": "blink.cmp",
+      "types": [
+        "blink.cmp.Config"
+      ],
+      "file": "code/blink.lua"
+    },
+    {
+      "module": "render-markdown",
+      "types": [
+        "render.md.UserConfig"
+      ],
+      "file": "code/render-markdown.lua"
+    },
+    {
+      "module": "mason-lspconfig",
+      "types": [
+        "MasonLspconfig.SetupOpts"
+      ],
+      "file": "code/lsp.lua"
+    },
+    {
+      "module": "lualine",
+      "types": [],
+      "file": "ui/lualine.lua"
+    },
+    {
+      "module": "tokyonight",
+      "types": [],
+      "file": "ui/theme.lua"
+    },
+    {
+      "module": "bufferline",
+      "types": [
+        "bufferline.Options"
+      ],
+      "file": "ui/bufferline.lua"
+    },
+    {
+      "module": "noice",
+      "types": [
+        "NoiceConfig"
+      ],
+      "file": "ui/noice.lua"
+    },
+    {
+      "module": "ibl",
+      "types": [
+        "ibl.config"
+      ],
+      "file": "ui/indent.lua"
+    },
+    {
+      "types": [
+        "snacks.Config",
+        "snacks.dashboard.Item[]"
+      ],
+      "file": "snacks.lua"
+    },
+    {
+      "module": "flash",
+      "types": [
+        "Flash.Config"
+      ],
+      "file": "tools/flash.lua"
+    },
+    {
+      "module": "auto-session",
+      "types": [
+        "AutoSession.Config"
+      ],
+      "file": "tools/session.lua"
+    },
+    {
+      "module": "which-key",
+      "types": [
+        "WhichKey.Config"
+      ],
+      "file": "tools/which-key.lua"
+    }
   ]
 }

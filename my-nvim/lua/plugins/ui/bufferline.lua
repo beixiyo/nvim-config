@@ -2,12 +2,13 @@
 -- 顶部 Buffer 标签页（bufferline.nvim）
 -- ================================
 -- 在顶部显示 buffer 列表，类似 IDE 的标签栏；与 Snacks Explorer / 布局框配合时留出偏移
-
+---@module "bufferline"
 return {
   "akinsho/bufferline.nvim",
   version = "*",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   event = "VeryLazy",
+  ---@type bufferline.Options
   opts = {
     options = { -- bufferline 的核心配置
       -- stylua: ignore
