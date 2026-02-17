@@ -3,7 +3,6 @@ local M = {}
 -- 统一的图标表：不再按「用途」嵌套多级，而是用更语义化的 key 直接描述图标含义
 -- 约定：
 -- - 通用：直接用语义名，如 `lsp` / `clock`
--- - Dashboard：前缀 `dashboard_`
 -- - 文件类型：前缀 `ft_`
 -- - DAP：前缀 `dap_`
 -- - 诊断相关：前缀 `diagnostics_`
@@ -16,14 +15,14 @@ M.icons = {
   code = "",
 
   -- Dashboard
-  dashboard_find_file = "",
-  dashboard_new_file = "",
-  dashboard_find_text = "",
-  dashboard_recent_files = "",
-  dashboard_config = "",
-  dashboard_session = "",
-  dashboard_lazy = "󰒲",
-  dashboard_quit = "",
+  find_file = "",
+  new_file = "",
+  find_text = "",
+  recent_files = "",
+  config = "",
+  session = "",
+  lazy = "󰒲",
+  tools = "",
 
   -- 文件类型相关
   ft_octo = "",
@@ -51,9 +50,7 @@ M.icons = {
 
   -- 键位 / 操作相关（原 keymaps 下的图标）
   -- 文件相关
-  find_file = "󰈔",
   git_files = "󰊢",
-  recent_files = "󰋚",
   config_files = "󰒓",
   buffers = "󰈙",
   explorer = "󰉓",

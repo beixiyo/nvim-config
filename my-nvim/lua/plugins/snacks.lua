@@ -90,14 +90,15 @@ return {
 
         ---@type snacks.dashboard.Item[]
         keys = {
-          { icon = icons.dashboard_find_file,    key = "f", desc = "Find File",       action = ":lua Snacks.dashboard.pick('files')" },
-          { icon = icons.dashboard_new_file,     key = "n", desc = "New File",        action = ":ene | startinsert" },
-          { icon = icons.dashboard_find_text,    key = "g", desc = "Find Text",       action = ":lua Snacks.dashboard.pick('live_grep')" },
-          { icon = icons.dashboard_recent_files, key = "r", desc = "Recent Files",    action = ":lua Snacks.dashboard.pick('oldfiles')" },
-          { icon = icons.dashboard_config,       key = "c", desc = "Config",          action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-          { icon = icons.dashboard_session,      key = "s", desc = "Restore Session", action = ":AutoSession search" },
-          { icon = icons.dashboard_lazy,         key = "l", desc = "Lazy",            action = ":Lazy" },
-          { icon = icons.dashboard_quit,         key = "q", desc = "Quit",            action = ":qa" },
+          { icon = icons.find_file,    key = "f", desc = "Find File",       action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = icons.new_file,     key = "n", desc = "New File",        action = ":ene | startinsert" },
+          { icon = icons.find_text,    key = "g", desc = "Find Text",       action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = icons.recent_files, key = "r", desc = "Recent Files",    action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = icons.config,       key = "c", desc = "Config",          action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+          { icon = icons.session,      key = "s", desc = "Restore Session", action = ":AutoSession search" },
+          { icon = icons.lazy,         key = "l", desc = "Lazy",            action = ":Lazy" },
+          { icon = icons.tools,      key = "p", desc = "可选插件",         action = ":PluginManager" },
+          { icon = icons.quit,         key = "q", desc = "Quit",            action = ":qa" },
         },
       },
 
@@ -112,6 +113,12 @@ return {
   config = function(_, opts)
     local snacks = require("snacks")
     snacks.setup(opts)
+
+    -- 可选插件管理 GUI（类似 Mason）：:PluginManager 或 Dashboard 按 p
+    vim.api.nvim_create_user_command("PluginManager", function()
+      require("plugins.manager").open()
+    end, { desc = "打开可选插件管理（勾选/取消后保存，:Lazy sync 生效）" })
+
     -- 让 Snacks 的路径颜色更亮一些
     vim.api.nvim_create_autocmd("VimEnter", {
       callback = function()
@@ -223,6 +230,7 @@ return {
     { "<leader>fj", function() Snacks.picker.jumps() end, desc = icons.jumps .. " " .. "跳转历史" },
     { "<leader>fk", function() Snacks.picker.keymaps() end, desc = icons.keymaps .. " " .. "快捷键" },
     { "<leader>fT", function() Snacks.picker.todo_comments() end, desc = icons.todo_comments .. " " .. "待办注释" },
+    { "<leader>fp", "<cmd>PluginManager<cr>", desc = "可选插件管理" },
 
     -- =======================
     -- 6. 终端
