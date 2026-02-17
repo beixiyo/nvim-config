@@ -19,8 +19,19 @@ map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "焦点下窗口", silent = true
 map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "焦点上窗口", silent = true })
 map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "焦点右窗口", silent = true })
 
--- 系统剪贴板（与终端/其它应用互通）
+-- 系统剪贴板（与终端/其它应用互通）；SSH 下 <C-c> 复制到本机、<C-S-v> 从终端粘贴
 map("v", "<C-c>", '"+y', { desc = "复制到系统剪贴板", silent = true })
-map("n", "<C-v>", '"+p', { desc = "粘贴系统剪贴板", silent = true })
-map("i", "<C-v>", "<C-r>+", { desc = "粘贴系统剪贴板", silent = true })
-map("v", "<C-v>", '"+p', { desc = "粘贴系统剪贴板", silent = true })
+
+-- Alt + Left/Right 跳转到上一个/下一个光标位置（类似 VSCode 的导航历史）
+map("n", "<A-Left>", "<C-o>", { desc = "跳转到上一个光标位置", remap = true })
+map("n", "<A-Right>", "<C-i>", { desc = "跳转到下一个光标位置", remap = true })
+
+-- Alt + j/k 向上/向下移动当前行
+map("n", "<A-j>", ":m .+1<CR>==", { desc = "向下移动当前行", silent = true })
+map("n", "<A-k>", ":m .-2<CR>==", { desc = "向上移动当前行", silent = true })
+map("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "向下移动选中行", silent = true })
+map("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "向上移动选中行", silent = true })
+
+-- Ctrl+Alt+S 保存所有缓冲区
+-- 有的终端不支持 Ctrl + Alt 系列，可以输入 :echo getcharstr() 后按下快捷键，看是否有捕捉到按键
+map({ "i", "x", "n", "s" }, "<C-A-s>", "<cmd>wa<cr><esc>", { desc = "保存所有缓冲区" })

@@ -32,8 +32,14 @@ vim.opt.rtp:prepend(lazypath)
 -- spec：从 lua/plugins/init.lua（即 require("plugins") 的返回值）加载插件表
 -- defaults：新插件默认非懒加载、不固定版本
 -- install.colorscheme：首次安装后尝试设置的颜色方案；当前由 plugins.theme 设置 tokyonight
+
+-- 锁定版本：lazy-lock.json 记录当前插件 commit。要按锁定版本安装/恢复，执行 :Lazy restore
+-- 更新插件后 lockfile 会自动更新；新机器或克隆配置后执行一次 :Lazy restore 即可与 lockfile 一致
+local lockfile_path = vim.fn.stdpath("config") .. "/lazy-lock.json"
+
 require("lazy").setup({
   spec = { { import = "plugins" } },
   defaults = { lazy = false, version = false },
+  lockfile = lockfile_path,
   install = { colorscheme = { "tokyonight", "habamax" } },
 })
