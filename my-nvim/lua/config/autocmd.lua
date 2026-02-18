@@ -171,3 +171,20 @@ vim.api.nvim_create_autocmd({ "InsertEnter" }, {
     end)
   end,
 })
+
+-- ================================
+-- 保存前删除行尾空白（可选，避免提交多余空格）
+-- 参考: Abstract-IDE/Abstract, kickstart.nvim lint 等
+-- ================================
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = augroup("trim_trailing"),
+  pattern = "*",
+  callback = function(event)
+    if vim.bo[event.buf].filetype == "" or vim.bo[event.buf].buftype ~= "" then
+      return
+    end
+    local view = vim.fn.winsaveview()
+    vim.cmd([[keeppatterns %s/\s\+$//e]])
+    vim.fn.winrestview(view)
+  end,
+})
