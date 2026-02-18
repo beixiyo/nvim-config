@@ -34,23 +34,13 @@ return {
     -- 说明：
     -- - “加载中/进度”依赖 LSP 服务器是否发送 `$/progress`，很多服务器不会发，所以经常为空
     -- - 因此这里做了回退：没 progress 时显示当前 buffer 已挂载的 LSP 客户端（代表已加载）
+    -- 常见配置/声明式文件：不展示 LSP 状态（避免 NoLSP 干扰）
     local lsp_hidden_fts = {
-      -- 常见配置/声明式文件：不展示 LSP 状态（避免 NoLSP 干扰）
-      json = true,
-      jsonc = true,
-      yaml = true,
-      yml = true,
-      toml = true,
-      ini = true,
-      dosini = true,
-      conf = true,
-      config = true,
-      gitconfig = true,
-      gitignore = true,
-      gitattributes = true,
-      sshconfig = true,
-      properties = true,
-      dotenv = true,
+      "json", "jsonc", "yaml", "yml", "toml",
+      "ini", "dosini", "conf", "config",
+      "gitconfig", "gitignore", "gitattributes",
+      "sshconfig", "properties", "dotenv",
+      'md', 'markdown', 'txt'
     }
 
     local function lsp_should_show()
@@ -65,7 +55,7 @@ return {
       end
 
       -- 配置型 filetype 不显示
-      return not lsp_hidden_fts[vim.bo.filetype]
+      return not vim.tbl_contains(lsp_hidden_fts, vim.bo.filetype)
     end
 
     local function lsp_progress()
@@ -131,8 +121,17 @@ return {
       sections = {
         -- 左侧：当前模式
         lualine_a = { "mode" },
-        -- 左侧：Git 分支
-        lualine_b = { "branch" },
+        -- 左侧：Git 分支（点击打开分支查看）
+        lualine_b = {
+          {
+            "branch",
+            on_click = function(_, button)
+              if button == "l" then
+                utils.lualine.open_branch_view()
+              end
+            end,
+          },
+        },
 
         lualine_c = {
           -- 项目根目录（utils.lualine.root_dir）
@@ -149,8 +148,15 @@ return {
           },
           -- 当前文件类型图标（仅图标）
           { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-          -- 友好路径展示（utils.lualine.pretty_path）
-          { utils.lualine.pretty_path() },
+          -- 友好路径展示（点击复制 相对路径:行号）
+          {
+            utils.lualine.pretty_path(),
+            on_click = function(_, button)
+              if button == "l" then
+                utils.lualine.copy_path_line()
+              end
+            end,
+          },
         },
 
         lualine_x = {
@@ -224,15 +230,30 @@ return {
           },
         },
         lualine_y = {
-          -- 进度 + 光标位置
+          -- 进度 + 光标位置（点击行列号复制 相对路径:行号）
           { "progress", separator = " ", padding = { left = 1, right = 0 } },
-          { "location", padding = { left = 0, right = 1 } },
+          {
+            "location",
+            padding = { left = 0, right = 1 },
+            on_click = function(_, button)
+              if button == "l" then
+                utils.lualine.copy_path_line()
+              end
+            end,
+          },
         },
         lualine_z = {
-          -- 右侧时钟
-          function()
-            return icons.clock .. " " .. os.date("%R")
-          end,
+          -- 右侧时钟（点击复制 yyyy-MM-dd HH:mm:ss）
+          {
+            function()
+              return icons.clock .. " " .. os.date("%R")
+            end,
+            on_click = function(_, button)
+              if button == "l" then
+                utils.lualine.copy_datetime()
+              end
+            end,
+          },
         },
       },
       extensions = { "lazy", "fzf" },

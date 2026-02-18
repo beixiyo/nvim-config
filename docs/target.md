@@ -100,11 +100,17 @@
 
 | 功能 | 说明 | 当前状态 |
 |------|------|----------|
-| **Git 行内** | 行内 diff 标记、hunk 暂存、blame 等 | 未装 gitsigns.nvim；lualine 已预留 gitsigns 状态显示，安装后即可用。 |
+| **Git 行内** | 行内 diff 标记、hunk 暂存、blame 等 | ✅ **已实现**：`plugins/code/gitsigns.lua`，键位 `<leader>gh*`、`[h/]h` 等。 |
 | **调试** | 断点、单步、变量查看（DAP） | 未装 nvim-dap；lualine 已预留 dap 状态显示。 |
 | **注释** | `gc` / `gcc` 快速注释 | 未装 comment.nvim 或 mini.comment，可按需添加。 |
-| **测试** | 运行/跳转测试（neotest 等） | 未配置。 |
+| **测试** | 运行/跳转测试（neotest 等） | 未配置。可参考 LazyVim 的 `lua/lazyvim/plugins/extras/test/core.lua`，需要安装 `nvim-neotest/neotest` 及对应语言的适配器（如 `nvim-neotest/neotest-python`）。 |
 | **独立格式化** | 非 LSP 的格式化（如 Prettier、Stylus） | 当前仅用 LSP `buf.format`；若需统一多工具可加 conform.nvim 等。 |
-| **多光标** | 批量编辑 | 未配置；Snacks.words 仅高亮同词，非多光标。可选插件对比见 [multi-cursor-plugins.md](multi-cursor-plugins.md)。 |
+| **多光标** | 批量编辑 | ✅ **已实现**：`plugins/tools/multicursor.lua`，支持上下行加光标、匹配词加光标、鼠标点击等。 |
+| **自动命令** | 文件变化检查、复制高亮、保存前创建目录等 | ✅ **已实现**：`lua/config/autocmd.lua` 包含常用自动命令。 |
+| **代码片段** | 代码片段补全（snippets） | ✅ **已实现**：blink.cmp + friendly-snippets，支持 LSP snippets。 |
+| **会话管理** | 自动保存/恢复编辑会话 | ✅ **已实现**：auto-session，键位 `<leader>qs/ql/qS/qd`。 |
+| **文件树** | 侧边栏文件浏览器 | ✅ **已实现**：Snacks.explorer，键位 `<leader>e`。 |
+| **终端集成** | 内置终端 | ✅ **已实现**：Snacks.terminal，键位 `Ctrl+\` 或 `<leader>ft`。 |
+| **文件搜索** | 快速查找文件、内容 | ✅ **已实现**：Snacks.picker，键位 `<leader>ff/sg/fr/fb` 等。 |
 
 以上均为**可选**，视个人工作流决定是否补齐。

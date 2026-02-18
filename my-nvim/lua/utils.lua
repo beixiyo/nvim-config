@@ -11,7 +11,7 @@ M.icons = {
   -- 通用 / 杂项
   dots = "󰇘",
   clock = "",
-  lsp = "",
+  lsp = "󰘦",
   code = "",
 
   -- Dashboard
@@ -334,6 +334,34 @@ function M.lualine.pretty_path(opts)
       readonly = format_hl(self, opts.readonly_icon, opts.modified_hl)
     end
     return dir .. parts[#parts] .. readonly
+  end
+end
+
+--- 复制「相对路径:行号」到系统剪贴板（供 lualine 文件名/行列号点击使用）
+function M.lualine.copy_path_line()
+  local rel = vim.fn.expand("%:.")
+  if rel == "" then
+    return
+  end
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+  local text = rel .. ":" .. row
+  vim.fn.setreg("+", text)
+  vim.notify("已复制: " .. text, vim.log.levels.INFO, { title = "Lualine" })
+end
+
+--- 复制当前时间 yyyy-MM-dd HH:mm:ss 到系统剪贴板（供 lualine 时钟点击使用）
+function M.lualine.copy_datetime()
+  local text = os.date("%Y-%m-%d %H:%M:%S")
+  vim.fn.setreg("+", text)
+  vim.notify("已复制: " .. text, vim.log.levels.INFO, { title = "Lualine" })
+end
+
+--- 打开分支查看（使用 Snacks.picker.git_branches）
+function M.lualine.open_branch_view()
+  if type(Snacks) == "table" and type(Snacks.picker) == "table" and type(Snacks.picker.git_branches) == "function" then
+    Snacks.picker.git_branches()
+  else
+    vim.cmd("Git branch")
   end
 end
 

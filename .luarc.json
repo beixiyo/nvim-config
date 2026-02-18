@@ -51,6 +51,12 @@
       "file": "code/render-markdown.lua"
     },
     {
+      "types": [
+        "PluginEntry[]"
+      ],
+      "file": "manager-ui/registry.lua"
+    },
+    {
       "module": "tokyonight",
       "types": [],
       "file": "ui/theme.lua"
